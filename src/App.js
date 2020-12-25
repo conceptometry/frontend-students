@@ -1,21 +1,24 @@
+import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Dashboard from './Dashboard';
 import Sidenav from './shared/Sidenav';
 import { GlobalStyles } from './styles/GlobalStyles';
 import { PageWithNavbar } from './styles/Page';
 
 const App = () => {
+	const Dashboard = lazy(() => import('./Dashboard'));
 	return (
 		<>
-			<GlobalStyles />
-			<Switch>
-				<Route exact path='/'>
-					<Sidenav />
-					<PageWithNavbar>
-						<Dashboard />
-					</PageWithNavbar>
-				</Route>
-			</Switch>
+			<Suspense fallback={<div>Loading...</div>}>
+				<GlobalStyles />
+				<Switch>
+					<Route exact path='/'>
+						<Sidenav />
+						<PageWithNavbar>
+							<Dashboard />
+						</PageWithNavbar>
+					</Route>
+				</Switch>
+			</Suspense>
 		</>
 	);
 };

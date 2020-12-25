@@ -7,7 +7,6 @@ const Dashboard = () => {
 		<DashboardContainer>
 			<Introduction />
 			<LatestFeed />
-			<LatestFeed />
 		</DashboardContainer>
 	);
 };

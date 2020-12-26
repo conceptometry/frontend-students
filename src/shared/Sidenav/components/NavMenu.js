@@ -16,13 +16,13 @@ const NavMenu = () => {
 					<NavMenuLink to='/'>Home</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
-					<NavMenuLink to='/'>Assignments</NavMenuLink>
+					<NavMenuLink to='/assignments'>Assignments</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
-					<NavMenuLink to='/'>Lectures</NavMenuLink>
+					<NavMenuLink to='/lectures'>Lectures</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
-					<NavMenuLink to='/'>My Profile</NavMenuLink>
+					<NavMenuLink to='/profile'>My Profile</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
 					<Tooltip title='Refresh' placement='right'>

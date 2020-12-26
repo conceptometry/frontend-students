@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
     *, body{
@@ -28,4 +28,16 @@ export const GlobalStyles = createGlobalStyle`
     h6 {
         font-size: 12px;
     }
+`;
+
+export const AppContainer = styled.section`
+	@media (max-width: 768px) {
+		display: none;
+	}
+`;
+
+export const BiggerScreenPageContainer = styled.div`
+	@media (min-width: 767px) {
+		display: none;
+	}
 `;

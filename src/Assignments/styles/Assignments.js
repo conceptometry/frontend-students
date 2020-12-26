@@ -7,6 +7,7 @@ export const AssignmentsContainer = styled.section`
 	margin-right: auto;
 	width: 100%;
 	padding-right: 10px;
+	padding-left: 10px;
 `;
 
 export const AssignmentsPageTitle = styled.h1`

@@ -7,6 +7,7 @@ export const LecturesContainer = styled.section`
 	margin-right: auto;
 	width: 100%;
 	padding-right: 10px;
+	padding-left: 10px;
 `;
 
 export const LecturesPageTitle = styled.h1`

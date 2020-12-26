@@ -12,6 +12,7 @@ const App = () => {
 	const Dashboard = lazy(() => import('./Dashboard'));
 	const Assignments = lazy(() => import('./Assignments'));
 	const Lectures = lazy(() => import('./Lectures'));
+	const Profile = lazy(() => import('./Profile'));
 	const NotFound = lazy(() => import('./shared/404'));
 	const BiggerScreenPage = lazy(() => import('./shared/BiggerScreenPage'));
 	return (
@@ -49,7 +50,7 @@ const App = () => {
 							<Route exact path='/profile'>
 								<Sidenav />
 								<PageWithNavbar>
-									<Dashboard />
+									<Profile />
 								</PageWithNavbar>
 							</Route>
 							{/* 404 Page */}

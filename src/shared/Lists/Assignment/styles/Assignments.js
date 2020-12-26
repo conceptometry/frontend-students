@@ -1,9 +1,9 @@
 import { ChevronRightRounded } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { PrimaryBeige } from '../../../../../styles/ColorPallet';
+import { PrimaryBeige } from '../../../../styles/ColorPallet';
 
-export const LectureListContainer = styled.div`
+export const AssignmentListContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	background: linear-gradient(
@@ -19,37 +19,31 @@ export const LectureListContainer = styled.div`
 	justify-content: space-between;
 `;
 
-export const LectureTitle = styled.h2`
+export const AssignmentTitle = styled.h2`
 	display: flex;
 	margin-top: auto;
 	margin-bottom: auto;
 	font-size: 24px;
 `;
 
-export const LectureInfo = styled.div`
+export const AssignmentInfo = styled.div`
 	display: flex;
 `;
 
-export const LectureContainer = styled.div`
+export const AssignmentDueDate = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: auto;
 	margin-bottom: auto;
-	margin-left: 14px;
 `;
 
-export const LectureContainerInfo = styled.h4`
+export const AssignmentDate = styled.h4`
 	display: flex;
 	font-size: 16px;
 	margin-top: -5px;
 `;
 
-export const SmallInfo = styled.small`
-	font-size: 12px;
-	padding-top: 5px;
-`;
-
-export const ViewLectureLink = styled(Link)`
+export const ViewAssignmentLink = styled(Link)`
 	display: flex;
 	text-decoration: none;
 	font-size: 38px;
@@ -58,7 +52,7 @@ export const ViewLectureLink = styled(Link)`
 	margin-bottom: auto;
 `;
 
-export const ViewLectureIcon = styled(ChevronRightRounded)`
+export const ViewAssignmentIcon = styled(ChevronRightRounded)`
 	display: flex;
 	/* font-size: px; */
 	margin-top: auto;

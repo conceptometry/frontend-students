@@ -1,13 +1,16 @@
 import React from 'react';
+import { logo } from '../../global/logo';
 import Identity from './components/Identity';
 import NavMenu from './components/NavMenu';
-import { NavTitle, Sidebar } from './styles/Sidenav';
+import { NavLink, NavLogo, Sidebar } from './styles/Sidenav';
 
 const Sidenav = () => {
 	return (
 		<>
 			<Sidebar>
-				<NavTitle>Conceptometry</NavTitle>
+				<NavLink to='/'>
+					<NavLogo src={logo} alt='Conceptometry Logo	' />
+				</NavLink>
 				<Identity />
 				<NavMenu />
 			</Sidebar>

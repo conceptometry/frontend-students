@@ -1,4 +1,4 @@
-import AssignmentList from '../shared/Sidenav/Lists/Assignment';
+import AssignmentList from '../shared/Lists/Assignment';
 import {
 	AssignmentsContainer,
 	AssignmentsPageTitle,

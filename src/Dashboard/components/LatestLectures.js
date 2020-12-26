@@ -1,5 +1,5 @@
 import React from 'react';
-import LectureList from '../../shared/Sidenav/Lists/Lecture';
+import LectureList from '../../shared/Lists/Lecture';
 import { LatestLecturesContainer, ViewAllBtn } from '../styles/LatestLectures';
 
 const LatestLectures = () => {

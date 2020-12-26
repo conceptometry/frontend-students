@@ -1,5 +1,5 @@
 import React from 'react';
-import AssignmentList from '../../shared/Sidenav/Lists/Assignment';
+import AssignmentList from '../../shared/Lists/Assignment';
 import {
 	LatestAssignmentsContainer,
 	ViewAllBtn,

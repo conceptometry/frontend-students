@@ -1,3 +1,5 @@
+import PersonInfo from './components/PersonInfo';
+import PersonWorkStatus from './components/PersonWorkStatus';
 import {
 	EditProfileImage,
 	ProfileContainer,
@@ -11,6 +13,8 @@ const Profile = () => {
 			<ProfileInfo>
 				<ProfileImage src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg' />
 				<EditProfileImage>Edit Image</EditProfileImage>
+				<PersonInfo />
+				<PersonWorkStatus />
 			</ProfileInfo>
 		</ProfileContainer>
 	);

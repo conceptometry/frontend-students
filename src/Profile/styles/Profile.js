@@ -29,6 +29,11 @@ export const ProfileInfo = styled.div`
 	margin-left: 3rem;
 	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
 	min-height: calc(100vh - 13rem);
+
+	@media (max-width: 992px) {
+		margin-right: 1rem;
+		margin-left: 1rem;
+	}
 `;
 
 export const ProfileImage = styled.img`
@@ -40,6 +45,10 @@ export const ProfileImage = styled.img`
 	max-width: 98px;
 	margin-top: -4.3rem;
 	border: 1px solid #111;
+
+	@media (max-width: 992px) {
+		max-width: 78px;
+	}
 `;
 
 export const EditProfileImage = styled.button`
@@ -59,7 +68,12 @@ export const EditProfileImage = styled.button`
 	cursor: pointer;
 
 	&:hover {
-		background-color: ${PrimaryBeige};
+		background: linear-gradient(to top left, ${PrimaryWhite}, ${PrimaryBeige});
+
 		transition: 0.2s;
+	}
+
+	@media (max-width: 992px) {
+		padding: 4px 6px;
 	}
 `;

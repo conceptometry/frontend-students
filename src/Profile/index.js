@@ -1,3 +1,4 @@
+import PasswordUpdate from './components/PasswordUpdate';
 import PersonInfo from './components/PersonInfo';
 import PersonWorkStatus from './components/PersonWorkStatus';
 import {
@@ -15,6 +16,7 @@ const Profile = () => {
 				<EditProfileImage>Edit Image</EditProfileImage>
 				<PersonInfo />
 				<PersonWorkStatus />
+				<PasswordUpdate />
 			</ProfileInfo>
 		</ProfileContainer>
 	);

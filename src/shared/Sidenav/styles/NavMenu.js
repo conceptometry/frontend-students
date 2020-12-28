@@ -33,6 +33,10 @@ export const NavMenuLink = styled(Link)`
 	&:active {
 		text-decoration: none;
 	}
+
+	@media (max-width: 992px) {
+		font-size: 18px;
+	}
 `;
 
 export const RefreshIcon = styled(CachedRounded)`

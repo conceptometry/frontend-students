@@ -21,7 +21,7 @@ const PersonInfo = () => {
 			setModalOpen(true);
 		}
 	};
-	const submitInfo = (e) => {
+	const updateInfo = (e) => {
 		e.preventDefault();
 		handleEditInfoModal();
 	};
@@ -64,7 +64,7 @@ const PersonInfo = () => {
 				<Grow in={modalOpen}>
 					<div className={classes.paper}>
 						<h2 style={{ textAlign: 'center' }}>Edit Information</h2>
-						<Form flex flexCol w100 onSubmit={submitInfo}>
+						<Form flex flexCol w100 onSubmit={updateInfo}>
 							<FormLabel flex start>
 								Name
 							</FormLabel>

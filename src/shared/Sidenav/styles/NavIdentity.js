@@ -33,8 +33,16 @@ export const SignOutButton = styled.span`
 	/* position: absolute; */
 	cursor: pointer;
 	margin-top: -5px;
+
+	@media (max-width: 992px) {
+		font-size: 12px;
+	}
 `;
 
 export const DisplayName = styled.h3`
 	font-size: 20px;
+
+	@media (max-width: 992px) {
+		font-size: 18px;
+	}
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PrimaryWhite } from './ColorPallet';
+import { PrimaryBeige, PrimaryWhite } from './ColorPallet';
 
 export const Form = styled.form`
 	${(props) => props.borderDark && `border: 1px solid #111;`}
@@ -14,12 +14,11 @@ export const Form = styled.form`
 `;
 
 export const FormInput = styled.input`
-	padding: 5px 8px;
 	outline: none;
 	border-radius: 6px;
 	background: linear-gradient(to bottom right, ${PrimaryWhite}, #fbfdff);
-	transition: 0.3s;
 	font-size: 16px;
+	transition: 0.3s;
 
 	${(props) => props.center && `margin-left: auto; margin-right: auto;`}
 	${(props) => props.mt && `margin-top: 9px;`}
@@ -27,10 +26,35 @@ export const FormInput = styled.input`
 	${(props) => props.flex && `display: flex;`}
 	${(props) => props.flexCol && `flex-direction: column;`}
 	${(props) => (props.border ? `border: 0.1px solid #a3a3a3;` : `border: none;`)}
+	${(props) => (!props.file ? `padding: 5px 8px;` : `padding: 4px 0px;`)}
 
     &:focus {
-		box-shadow: 0px 0px 1px 3px #a9d2ff;
+		${(props) =>
+			!props.file &&
+			`box-shadow: 0px 0px 1px 3px #a9d2ff;
+		transition: 0.3s;`}
+	}
+	&::-webkit-file-upload-button {
+		padding: 5px;
+		outline: none;
+		background: linear-gradient(
+			to bottom right,
+			${PrimaryBeige},
+			${PrimaryWhite}
+		);
+		box-sizing: border-box;
+		box-shadow: 2px 3px 1px rgba(0, 0, 0, 0.25);
+		border-radius: 7px;
+		font-size: 16px;
+		transition: 0.2s;
+		border: 1px solid #000000;
 		transition: 0.3s;
+		width: 100%;
+
+		&:hover {
+			transition: 0.3s;
+			background: ${PrimaryBeige};
+		}
 	}
 `;
 

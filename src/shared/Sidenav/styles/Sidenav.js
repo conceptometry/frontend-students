@@ -8,7 +8,13 @@ export const Sidebar = styled.header`
 	background-color: ${NavBrown};
 	width: 270px;
 	min-height: 100vh;
+	transition: 0.5s;
 	position: fixed;
+
+	@media (max-width: 992px) {
+		transition: 0.5s;
+		width: 240px;
+	}
 `;
 
 export const NavLink = styled(Link)`

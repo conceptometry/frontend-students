@@ -45,8 +45,8 @@ const Profile = () => {
 		}, 0);
 	}, []);
 	return (
-		<Grow in={visible} timeout={700}>
-			<ProfileContainer>
+		<ProfileContainer>
+			<Grow in={visible} timeout={700}>
 				<ProfileInfo>
 					<ProfileImage src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg' />
 					<EditProfileImage onClick={handleUpdateImageModal}>
@@ -96,8 +96,8 @@ const Profile = () => {
 					<PersonWorkStatus />
 					<PasswordUpdate />
 				</ProfileInfo>
-			</ProfileContainer>
-		</Grow>
+			</Grow>
+		</ProfileContainer>
 	);
 };
 

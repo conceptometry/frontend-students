@@ -1,5 +1,7 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { useStateValue } from './shared/context/StateProvider';
+import { LoadingScreen } from './shared/Loading';
 import Sidenav from './shared/Sidenav';
 import {
 	AppContainer,
@@ -15,14 +17,24 @@ const App = () => {
 	const Profile = lazy(() => import('./Profile'));
 	const NotFound = lazy(() => import('./shared/404'));
 	const BiggerScreenPage = lazy(() => import('./shared/BiggerScreenPage'));
+
+	// Main Logic
+	const [{ user, token, error }, dispatch] = useStateValue();
+	useEffect(() => {
+		localStorage.setItem('user', JSON.stringify(user));
+	}, [user]);
+	useEffect(() => {
+		localStorage.setItem('token', JSON.stringify(token));
+	}, [token]);
 	return (
 		<>
-			<Suspense fallback={<div>Loading...</div>}>
+			<Suspense fallback={<LoadingScreen />}>
 				<BiggerScreenPageContainer>
 					<BiggerScreenPage />
 				</BiggerScreenPageContainer>
 				<AppContainer>
 					<>
+						<p className='text-center'>{error && error}</p>
 						<GlobalStyles />
 						<Switch>
 							{/* Home Page */}

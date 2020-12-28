@@ -23,7 +23,7 @@ export const AssignmentTitle = styled.h2`
 	display: flex;
 	margin-top: auto;
 	margin-bottom: auto;
-	font-size: 24px;
+	font-size: 20px;
 `;
 
 export const AssignmentInfo = styled.div`
@@ -41,6 +41,15 @@ export const AssignmentDate = styled.h4`
 	display: flex;
 	font-size: 16px;
 	margin-top: -5px;
+`;
+
+export const Badge = styled.div`
+	border-radius: 9999px;
+	padding: 2px 10px;
+	${(props) => props.borderRed && `border: 1px solid #661212;`}
+	${(props) => props.red && `color: #661212;`}
+	${(props) => props.borderBlack && `border: 1px solid #111;`}
+	${(props) => props.black && `color: #111;`}
 `;
 
 export const ViewAssignmentLink = styled(Link)`

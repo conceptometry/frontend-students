@@ -1,4 +1,6 @@
-import React from 'react';
+import { Badge } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { useStateValue } from '../../context/StateProvider';
 import {
 	AssignmentDate,
 	AssignmentDueDate,
@@ -9,16 +11,19 @@ import {
 	ViewAssignmentLink,
 } from './styles/Assignments';
 
-const AssignmentList = () => {
+const AssignmentList = ({ title, dueDate, id }) => {
+	const date = new Date(dueDate);
+	const formattedDueDate =
+		date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 	return (
 		<AssignmentListContainer>
-			<AssignmentTitle>This is an assignment</AssignmentTitle>
+			<AssignmentTitle>{title}</AssignmentTitle>
 			<AssignmentInfo>
 				<AssignmentDueDate>
 					<small>Due Date</small>
-					<AssignmentDate>17/11/2021</AssignmentDate>
+					<AssignmentDate>{formattedDueDate}</AssignmentDate>
 				</AssignmentDueDate>
-				<ViewAssignmentLink to='/'>
+				<ViewAssignmentLink to={`/assignments/${id}`}>
 					<ViewAssignmentIcon />
 				</ViewAssignmentLink>
 			</AssignmentInfo>

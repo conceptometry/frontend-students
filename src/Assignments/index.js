@@ -1,3 +1,5 @@
+import { Grow } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 import AssignmentList from '../shared/Lists/Assignment';
 import {
 	AssignmentsContainer,
@@ -6,16 +8,24 @@ import {
 } from './styles/Assignments';
 
 const Assignments = () => {
+	const [visible, setVisible] = useState(false);
+	useEffect(() => {
+		setTimeout(function () {
+			setVisible(true);
+		}, 0);
+	}, []);
 	return (
-		<AssignmentsContainer>
-			<AssignmentsPageTitle>Assignments</AssignmentsPageTitle>
-			<AssignmentsListContainer>
-				<AssignmentList />
-				<AssignmentList />
-				<AssignmentList />
-				<AssignmentList />
-			</AssignmentsListContainer>
-		</AssignmentsContainer>
+		<Grow in={visible} timeout={700}>
+			<AssignmentsContainer>
+				<AssignmentsPageTitle>Assignments</AssignmentsPageTitle>
+				<AssignmentsListContainer>
+					<AssignmentList />
+					<AssignmentList />
+					<AssignmentList />
+					<AssignmentList />
+				</AssignmentsListContainer>
+			</AssignmentsContainer>
+		</Grow>
 	);
 };
 

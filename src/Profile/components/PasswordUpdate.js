@@ -4,6 +4,7 @@ import { Form, FormButton, FormInput } from '../../styles/Form';
 const PasswordUpdate = () => {
 	return (
 		<PasswordUpdateContainer>
+			<h1 style={{ marginBottom: 6 }}>Update Password</h1>
 			<Form flex flexCol w100>
 				<FormInput
 					w100
@@ -11,7 +12,7 @@ const PasswordUpdate = () => {
 					flex
 					type='text'
 					border
-					style={{ width: '97%' }}
+					style={{ width: '98%' }}
 					placeholder='Current Password'
 				/>
 				<FormInput
@@ -21,10 +22,12 @@ const PasswordUpdate = () => {
 					type='text'
 					border
 					mt
-					style={{ width: '97%' }}
+					style={{ width: '98%' }}
 					placeholder='New Password'
 				/>
-				<FormButton onClick={(e) => e.preventDefault()}>Submit</FormButton>
+				<FormButton w100 borderDark onClick={(e) => e.preventDefault()}>
+					Submit
+				</FormButton>
 			</Form>
 		</PasswordUpdateContainer>
 	);

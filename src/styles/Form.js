@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PrimaryWhite, RichBlue } from './ColorPallet';
+import { PrimaryWhite } from './ColorPallet';
 
 export const Form = styled.form`
 	${(props) => props.borderDark && `border: 1px solid #111;`}
@@ -29,7 +29,7 @@ export const FormInput = styled.input`
 	${(props) => (props.border ? `border: 0.1px solid #a3a3a3;` : `border: none;`)}
 
     &:focus {
-		box-shadow: 0px 0px 1px 3px #5485b9;
+		box-shadow: 0px 0px 1px 3px #a9d2ff;
 		transition: 0.3s;
 	}
 `;
@@ -43,22 +43,27 @@ export const FormLabel = styled.label`
 	padding-bottom: 1px;
 	${(props) => props.start && `text-align: left; padding-left: 2px;`}
 	${(props) => props.end && `text-align: right; padding-right: 2px;`}
+	${(props) => props.mt && `margin-top: 9px;`}
 	${(props) => props.flex && `display: flex;`}
 `;
 
 export const FormButton = styled.button`
 	padding: 5px;
 	outline: none;
-	border: 0.1px solid #838383;
-	width: 100%;
 	background: #fefefe;
-	border: 1px solid #000000;
 	box-sizing: border-box;
 	box-shadow: 2px 3px 1px rgba(0, 0, 0, 0.25);
 	border-radius: 7px;
 	font-size: 16px;
 	transition: 0.2s;
 	margin: 10px auto;
+
+	${(props) =>
+		props.borderLight ? `border: 0.1px solid #464242;` : `border: none;`}
+	${(props) =>
+		props.borderDark ? `border: 1px solid #000000;` : `border: none;`}
+	${(props) => props.flex && `display: flex;`}
+	${(props) => props.w100 && `width: 100%;`}
 
 	&:hover {
 		transition: 0.2s;

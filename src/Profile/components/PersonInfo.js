@@ -1,3 +1,7 @@
+import { Backdrop, Modal, Grow } from '@material-ui/core';
+import { useState } from 'react';
+import { useStyles } from '../../styles/MaterialUI-theme';
+import { Form, FormButton, FormInput, FormLabel } from '../../styles/Form';
 import {
 	EditProfileInfo,
 	PersonInfoContainer,
@@ -8,6 +12,19 @@ import {
 } from '../styles/PersonInfo';
 
 const PersonInfo = () => {
+	const classes = useStyles();
+	const [modalOpen, setModalOpen] = useState(false);
+	const handleEditInfoModal = () => {
+		if (modalOpen === true) {
+			setModalOpen(false);
+		} else {
+			setModalOpen(true);
+		}
+	};
+	const submitInfo = (e) => {
+		e.preventDefault();
+		handleEditInfoModal();
+	};
 	return (
 		<PersonInfoContainer>
 			<PersonInfoTable>
@@ -29,7 +46,69 @@ const PersonInfo = () => {
 				</PersonInfoTableRow>
 			</PersonInfoTable>
 
-			<EditProfileInfo>Edit Information</EditProfileInfo>
+			<EditProfileInfo onClick={handleEditInfoModal}>
+				Edit Information
+			</EditProfileInfo>
+			<Modal
+				aria-labelledby='transition-modal-title'
+				aria-describedby='transition-modal-description'
+				className={classes.modal}
+				open={modalOpen}
+				onClose={handleEditInfoModal}
+				closeAfterTransition
+				BackdropComponent={Backdrop}
+				BackdropProps={{
+					timeout: 500,
+				}}
+			>
+				<Grow in={modalOpen}>
+					<div className={classes.paper}>
+						<h2 style={{ textAlign: 'center' }}>Edit Information</h2>
+						<Form flex flexCol w100 onSubmit={submitInfo}>
+							<FormLabel flex start>
+								Name
+							</FormLabel>
+							<FormInput
+								border
+								flex
+								style={{ width: '60vh' }}
+								placeholder='Name'
+							/>
+							<FormLabel mt flex start>
+								Name
+							</FormLabel>
+							<FormInput
+								border
+								flex
+								style={{ width: '60vh' }}
+								placeholder='Name'
+							/>
+							<FormLabel mt flex start>
+								Name
+							</FormLabel>
+							<FormInput
+								border
+								flex
+								style={{ width: '60vh' }}
+								placeholder='Name'
+							/>
+							<FormLabel mt flex start>
+								Name
+							</FormLabel>
+							<FormInput
+								border
+								flex
+								style={{ width: '60vh' }}
+								placeholder='Name'
+							/>
+
+							<FormButton type='submit' borderDark w100>
+								Update
+							</FormButton>
+						</Form>
+					</div>
+				</Grow>
+			</Modal>
 		</PersonInfoContainer>
 	);
 };

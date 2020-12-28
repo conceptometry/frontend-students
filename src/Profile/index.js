@@ -29,8 +29,7 @@ const Profile = () => {
 		e.preventDefault();
 		if (newImage === null) {
 			alert('Please upload an Image');
-		}
-		{
+		} else {
 			handleUpdateImageModal();
 		}
 	};

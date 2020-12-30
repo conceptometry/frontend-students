@@ -1,6 +1,6 @@
 import { Grow } from '@material-ui/core';
 import { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useStateValue } from '../shared/context/StateProvider';
 import LectureList from '../shared/Lists/Lecture';
 import { LoadingCircular } from '../shared/Loading';
@@ -55,39 +55,55 @@ const Lectures = ({ match }) => {
 								</>
 							) : (
 								<>
-									{lectures.map((l) => (
+									{data !== null && data.count < 1 ? (
 										<>
-											<LectureList
-												key={l._id.toString()}
-												title={l.name}
-												eventTime={l.eventTime}
-												duration={l.duration}
-												id={l._id}
-											/>
+											<Redirect to='/404' />
 										</>
-									))}
-									{data !== null && data.pagination.next && (
+									) : (
 										<>
-											<Link
-												to={`/lectures/page/${parseInt(match.params.page) + 1}`}
-											>
-												Next
-											</Link>
-										</>
-									)}
-									{data !== null && data.pagination.prev && (
-										<>
-											<Link
-												to={`/lectures/page/${parseInt(match.params.page) - 1}`}
-											>
-												Previous
-											</Link>
+											{lectures.map((l) => (
+												<>
+													<LectureList
+														key={l._id.toString()}
+														title={l.name}
+														eventTime={l.eventTime}
+														duration={l.duration}
+														id={l._id}
+													/>
+												</>
+											))}
+											{data !== null && data.pagination.next && (
+												<>
+													<Link
+														to={`/lectures/page/${
+															parseInt(match.params.page) + 1
+														}`}
+													>
+														Next
+													</Link>
+												</>
+											)}
+											{data !== null && data.pagination.prev && (
+												<>
+													<Link
+														to={`/lectures/page/${
+															parseInt(match.params.page) - 1
+														}`}
+													>
+														Previous
+													</Link>
+												</>
+											)}
 										</>
 									)}
 								</>
 							)}
 						</>
 					)}
+
+					<button>
+						<Link to='/lectures/page/5'>Page 5</Link>
+					</button>
 				</LecturesListContainer>
 			</LecturesContainer>
 		</Grow>

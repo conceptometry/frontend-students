@@ -19,7 +19,7 @@ const NavMenu = () => {
 					<NavMenuLink to='/assignments'>Assignments</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
-					<NavMenuLink to='/lectures'>Lectures</NavMenuLink>
+					<NavMenuLink to='/lectures/page/1'>Lectures</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
 					<NavMenuLink to='/profile'>My Profile</NavMenuLink>

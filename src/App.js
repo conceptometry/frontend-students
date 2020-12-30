@@ -19,7 +19,7 @@ const App = () => {
 	const BiggerScreenPage = lazy(() => import('./shared/BiggerScreenPage'));
 
 	// Main Logic
-	const [{ user, token, error }, dispatch] = useStateValue();
+	const [{ user, token, error }] = useStateValue();
 	useEffect(() => {
 		localStorage.setItem('user', JSON.stringify(user));
 	}, [user]);
@@ -37,6 +37,20 @@ const App = () => {
 						<p className='text-center'>{error && error}</p>
 						<GlobalStyles />
 						<Switch>
+							{/* Lectures Page */}
+							<Route
+								exact
+								path='/lectures/page/:page'
+								render={({ match }) => (
+									<>
+										<Sidenav />
+										<PageWithNavbar>
+											<Lectures match={match} />
+										</PageWithNavbar>
+									</>
+								)}
+							/>
+
 							{/* Home Page */}
 							<Route exact path='/'>
 								<Sidenav />
@@ -49,13 +63,6 @@ const App = () => {
 								<Sidenav />
 								<PageWithNavbar>
 									<Assignments />
-								</PageWithNavbar>
-							</Route>
-							{/* Lectures Page */}
-							<Route exact path='/lectures'>
-								<Sidenav />
-								<PageWithNavbar>
-									<Lectures />
 								</PageWithNavbar>
 							</Route>
 							{/* Profile Page */}

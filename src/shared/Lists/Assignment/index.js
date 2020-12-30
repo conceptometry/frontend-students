@@ -1,6 +1,3 @@
-import { Badge } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import { useStateValue } from '../../context/StateProvider';
 import {
 	AssignmentDate,
 	AssignmentDueDate,

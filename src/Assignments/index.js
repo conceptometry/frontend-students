@@ -43,9 +43,10 @@ const Assignments = () => {
 								<>
 									{assignments.map((a) => (
 										<AssignmentList
+											key={a._id.toString()}
 											title={a.name}
 											dueDate={a.dueDate}
-											id={a.id}
+											id={a._id}
 										/>
 									))}
 								</>

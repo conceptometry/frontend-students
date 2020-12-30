@@ -10,22 +10,25 @@ import {
 	ViewLectureLink,
 } from './styles/LectureList';
 
-const LectureList = () => {
+const LectureList = ({ title, eventTime, duration, id }) => {
+	const date = new Date(eventTime);
+	const formattedDate =
+		date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 	return (
 		<LectureListContainer>
-			<LectureTitle>This is a lecture</LectureTitle>
+			<LectureTitle>{title}</LectureTitle>
 			<LectureInfo>
 				<LectureContainer>
 					<small>Date</small>
-					<LectureContainerInfo>21/12/2020</LectureContainerInfo>
+					<LectureContainerInfo>{formattedDate}</LectureContainerInfo>
 				</LectureContainer>
 				<LectureContainer>
 					<small>Duration</small>
 					<LectureContainerInfo>
-						60 <SmallInfo>min</SmallInfo>
+						{duration} <SmallInfo>min</SmallInfo>
 					</LectureContainerInfo>
 				</LectureContainer>
-				<ViewLectureLink to='/'>
+				<ViewLectureLink to={`/lectures/${id}`}>
 					<ViewLectureIcon />
 				</ViewLectureLink>
 			</LectureInfo>

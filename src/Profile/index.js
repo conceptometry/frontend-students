@@ -16,6 +16,7 @@ const Profile = () => {
 	const [visible, setVisible] = useState(false);
 	const [updateImageModalOpen, setUpdateImageModalOpen] = useState(false);
 	const [newImage, setNewImage] = useState(null);
+
 	const classes = useStyles();
 	const handleUpdateImageModal = () => {
 		if (updateImageModalOpen === true) {
@@ -34,8 +35,8 @@ const Profile = () => {
 		}
 	};
 
-	const handleNewImageSelect = (e) => {
-		if (e.target.files) {
+	const handleNewImageSelect = (e, urlImg) => {
+		if (e.target.files && e.target.files.length > 0) {
 			setNewImage(e.target.files[0]);
 		}
 	};
@@ -69,10 +70,7 @@ const Profile = () => {
 								<h2 style={{ textAlign: 'center' }}>Update Image</h2>
 								<Form flex flexCol w100 onSubmit={updateImage}>
 									<FormLabel flex start for='upload'>
-										Select Image -
-										{newImage === null
-											? ` No image has been chosen`
-											: ` ${newImage.name}`}
+										Select Image
 									</FormLabel>
 									<FormInput
 										id='upload'
@@ -80,7 +78,7 @@ const Profile = () => {
 										accept='image/*'
 										flex
 										file
-										style={{ width: '60vh' }}
+										style={{ width: '100%' }}
 										onChange={handleNewImageSelect}
 										placeholder='Name'
 									/>

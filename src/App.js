@@ -37,6 +37,20 @@ const App = () => {
 						<p className='text-center'>{error && error}</p>
 						<GlobalStyles />
 						<Switch>
+							{/* Assignments Page */}
+							<Route
+								exact
+								path='/assignments/page/:page'
+								render={({ match }) => (
+									<>
+										<Sidenav />
+										<PageWithNavbar>
+											<Assignments match={match} />
+										</PageWithNavbar>
+									</>
+								)}
+							/>
+
 							{/* Lectures Page */}
 							<Route
 								exact
@@ -56,13 +70,6 @@ const App = () => {
 								<Sidenav />
 								<PageWithNavbar>
 									<Dashboard />
-								</PageWithNavbar>
-							</Route>
-							{/* Assignments Page */}
-							<Route exact path='/assignments'>
-								<Sidenav />
-								<PageWithNavbar>
-									<Assignments />
 								</PageWithNavbar>
 							</Route>
 							{/* Profile Page */}

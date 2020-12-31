@@ -32,7 +32,7 @@ const Lectures = ({ match }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=1&page=${match.params.page}`;
+		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=10&page=${match.params.page}`;
 		const headers = {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
@@ -100,10 +100,6 @@ const Lectures = ({ match }) => {
 							)}
 						</>
 					)}
-
-					<button>
-						<Link to='/lectures/page/5'>Page 5</Link>
-					</button>
 				</LecturesListContainer>
 			</LecturesContainer>
 		</Grow>

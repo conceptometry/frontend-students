@@ -16,10 +16,10 @@ const NavMenu = () => {
 					<NavMenuLink to='/'>Home</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
-					<NavMenuLink to='/assignments/page/1'>Assignments</NavMenuLink>
+					<NavMenuLink to='/assignments'>Assignments</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
-					<NavMenuLink to='/lectures/page/1'>Lectures</NavMenuLink>
+					<NavMenuLink to='/lectures'>Lectures</NavMenuLink>
 				</NavMenuItem>
 				<NavMenuItem>
 					<NavMenuLink to='/profile'>My Profile</NavMenuLink>

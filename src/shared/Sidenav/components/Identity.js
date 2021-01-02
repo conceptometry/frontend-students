@@ -1,4 +1,4 @@
-import React from 'react';
+import { useStateValue } from '../../context/StateProvider';
 import {
 	DisplayName,
 	ImageContainer,
@@ -9,13 +9,22 @@ import {
 } from '../styles/NavIdentity';
 
 const Identity = () => {
+	const [{ user }] = useStateValue();
 	return (
 		<NavIdentity>
 			<ImageContainer>
-				<UserImage
-					src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg'
-					alt='User'
-				/>
+				{user.profilePhoto === 'no-photo.jpg' ? (
+					<>
+						<UserImage
+							src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg'
+							alt='User'
+						/>
+					</>
+				) : (
+					<>
+						<UserImage src={user.profilePhoto} alt='User' />
+					</>
+				)}
 			</ImageContainer>
 
 			<UserInfo>

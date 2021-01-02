@@ -32,7 +32,7 @@ const Lectures = ({ match }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=3&page=${match.params.page}`;
+		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=10&page=${match.params.page}&sort=eventTime`;
 		const headers = {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
@@ -44,17 +44,17 @@ const Lectures = ({ match }) => {
 	return (
 		<Grow in={visible} timeout={700}>
 			<LecturesContainer>
-				<LecturesPageTitle>Lectures</LecturesPageTitle>
-				<LecturesListContainer>
-					{error && <p>{error}</p>}
-					{!error && (
-						<>
-							{loading ? (
-								<>
-									<LoadingCircular />
-								</>
-							) : (
-								<>
+				{error && <p>{error}</p>}
+				{!error && (
+					<>
+						<LecturesPageTitle>Lectures</LecturesPageTitle>
+						{loading ? (
+							<>
+								<LoadingCircular />
+							</>
+						) : (
+							<>
+								<LecturesListContainer>
 									{data !== null && data.count < 1 ? (
 										<>
 											<Redirect to='/404' />
@@ -94,13 +94,18 @@ const Lectures = ({ match }) => {
 													</Link>
 												</>
 											)}
+											{data !== null && data.pages && (
+												<>
+													<p>Pages: {data.pages}</p>
+												</>
+											)}
 										</>
 									)}
-								</>
-							)}
-						</>
-					)}
-				</LecturesListContainer>
+								</LecturesListContainer>
+							</>
+						)}
+					</>
+				)}
 			</LecturesContainer>
 		</Grow>
 	);

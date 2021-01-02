@@ -9,7 +9,7 @@ const Sidenav = () => {
 		<>
 			<Sidebar>
 				<NavLink to='/'>
-					<NavLogo src={logo} alt='Conceptometry Logo	' />
+					<NavLogo src={logo} alt='Conceptometry Logo' />
 				</NavLink>
 				<Identity />
 				<NavMenu />

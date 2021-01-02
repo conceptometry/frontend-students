@@ -1,96 +1,78 @@
-import { lazy, Suspense, useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import Routes from './Routes';
 import { useStateValue } from './shared/context/StateProvider';
 import { LoadingScreen } from './shared/Loading';
-import Sidenav from './shared/Sidenav';
 import {
 	AppContainer,
 	BiggerScreenPageContainer,
 	GlobalStyles,
 } from './styles/GlobalStyles';
-import { PageWithNavbar } from './styles/Page';
 
 const App = () => {
-	const Dashboard = lazy(() => import('./Dashboard'));
-	const Assignments = lazy(() => import('./Assignments'));
-	const Lectures = lazy(() => import('./Lectures'));
-	const Profile = lazy(() => import('./Profile'));
-	const NotFound = lazy(() => import('./shared/404'));
 	const BiggerScreenPage = lazy(() => import('./shared/BiggerScreenPage'));
 
+	const [error, setError] = useState('');
+
 	// Main Logic
-	const [{ user, token, error }] = useStateValue();
+	const [{ user, token }, dispatch] = useStateValue();
 	useEffect(() => {
 		localStorage.setItem('user', JSON.stringify(user));
 	}, [user]);
 	useEffect(() => {
 		localStorage.setItem('token', JSON.stringify(token));
 	}, [token]);
+	useEffect(() => {
+		const getUser = async () => {
+			if (token !== null) {
+				const url = `${process.env.REACT_APP_API_URI}/users/me`;
+				const headers = {
+					'Content-Type': 'application/json',
+					authorization: `Bearer ${token}`,
+				};
+				const options = {
+					method: 'GET',
+					headers,
+				};
+				await fetch(url, options)
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.success === false) {
+							setError(data.message);
+						} else {
+							setError('');
+							dispatch({
+								type: 'SET_USER',
+								user: data.message,
+								token,
+							});
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+						setError('Something went wrong, 500');
+					});
+			}
+		};
+
+		getUser();
+	}, [token, dispatch]);
 	return (
 		<>
 			<Suspense fallback={<LoadingScreen />}>
-				<BiggerScreenPageContainer>
-					<BiggerScreenPage />
-				</BiggerScreenPageContainer>
-				<AppContainer>
+				<GlobalStyles />
+				{error && <p>{error}</p>}
+				{!error && (
 					<>
-						<p className='text-center'>{error && error}</p>
-						<GlobalStyles />
-						<Switch>
-							{/* Lectures Page */}
-							<Route
-								exact
-								path='/lectures/page/:page'
-								render={({ match }) => (
-									<>
-										<Sidenav />
-										<PageWithNavbar>
-											<Lectures match={match} />
-										</PageWithNavbar>
-									</>
-								)}
-							/>
-
-							{/* Home Page */}
-							<Route exact path='/'>
-								<Sidenav />
-								<PageWithNavbar>
-									<Dashboard />
-								</PageWithNavbar>
-							</Route>
-
-							{/* Assignments Page */}
-							<Route
-								exact
-								path='/assignments/page/:page'
-								render={({ match }) => (
-									<>
-										<Sidenav />
-										<PageWithNavbar>
-											<Assignments match={match} />
-										</PageWithNavbar>
-									</>
-								)}
-							/>
-							{/* Profile Page */}
-							<Route exact path='/profile'>
-								<Sidenav />
-								<PageWithNavbar>
-									<Profile />
-								</PageWithNavbar>
-							</Route>
-							{/* 404 Page */}
-							<Route exact path='/404'>
-								<NotFound />
-							</Route>
-
-							{/* Redirect to 404 page if no resource is found */}
-							<Route exact path='*'>
-								<Redirect to='/404' />
-							</Route>
-						</Switch>
+						<BiggerScreenPageContainer>
+							<BiggerScreenPage />
+						</BiggerScreenPageContainer>
+						<AppContainer>
+							<>
+								<Routes />
+							</>
+						</AppContainer>
 					</>
-				</AppContainer>
+				)}
 			</Suspense>
 		</>
 	);

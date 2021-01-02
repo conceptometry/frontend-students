@@ -1,4 +1,4 @@
-import { Backdrop, Grow, Modal } from '@material-ui/core';
+import { Backdrop, Grow, LinearProgress, Modal } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { Form, FormButton, FormInput, FormLabel } from '../styles/Form';
 import { useStyles } from '../styles/MaterialUI-theme';
@@ -14,11 +14,12 @@ import {
 } from './styles/Profile';
 
 const Profile = () => {
-	const [{ token }] = useStateValue();
+	const [{ user, token }, dispatch] = useStateValue();
 	const [visible, setVisible] = useState(false);
 	const [updateImageModalOpen, setUpdateImageModalOpen] = useState(false);
 	const [newImage, setNewImage] = useState(null);
 	const [submissionMessage, setSubmissionMessage] = useState('');
+	const [submitting, setSubmitting] = useState(false);
 
 	const classes = useStyles();
 	const handleUpdateImageModal = () => {
@@ -34,11 +35,16 @@ const Profile = () => {
 		if (newImage === null) {
 			alert('Please upload an Image');
 		} else {
+			setSubmitting(true);
+			const submissionData = new FormData();
+			submissionData.append('file', newImage);
 			const options = {
 				method: 'PUT',
 				headers: {
 					authorization: `Bearer ${token}`,
 				},
+
+				body: submissionData,
 			};
 			await fetch(`${process.env.REACT_APP_API_URI}/users/me/photo`, options)
 				.then((response) => response.json())
@@ -47,10 +53,12 @@ const Profile = () => {
 						setSubmissionMessage(`${data.message}`);
 					} else {
 						setSubmissionMessage(`Profile photo has been updated`);
-						// dispatch({
-						// 	type: 'SET_USER',
-						// 	action: ``
-						// })
+						dispatch({
+							type: 'SET_USER',
+							user: data.message,
+							token: token,
+						});
+
 						handleUpdateImageModal();
 					}
 				})
@@ -58,6 +66,7 @@ const Profile = () => {
 					console.log(err);
 					setSubmissionMessage('Something went wrong, 500');
 				});
+			setSubmitting(false);
 		}
 	};
 
@@ -75,7 +84,15 @@ const Profile = () => {
 		<ProfileContainer>
 			<Grow in={visible} timeout={700}>
 				<ProfileInfo>
-					<ProfileImage src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg' />
+					{user.profilePhoto === 'no-photo.jpg' ? (
+						<>
+							<ProfileImage src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg' />
+						</>
+					) : (
+						<>
+							<ProfileImage src={user.profilePhoto} />
+						</>
+					)}
 					<EditProfileImage onClick={handleUpdateImageModal}>
 						Edit Image
 					</EditProfileImage>
@@ -113,6 +130,12 @@ const Profile = () => {
 									<FormButton type='submit' borderDark w100>
 										Update
 									</FormButton>
+
+									{submitting && (
+										<>
+											<LinearProgress style={{ width: '100%' }} />
+										</>
+									)}
 
 									{submissionMessage && <p>{submissionMessage}</p>}
 								</Form>

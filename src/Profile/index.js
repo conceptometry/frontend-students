@@ -5,6 +5,7 @@ import { useStyles } from '../styles/MaterialUI-theme';
 import PasswordUpdate from './components/PasswordUpdate';
 import PersonInfo from './components/PersonInfo';
 import PersonWorkStatus from './components/PersonWorkStatus';
+import { useStateValue } from '../shared/context/StateProvider';
 import {
 	EditProfileImage,
 	ProfileContainer,
@@ -13,9 +14,11 @@ import {
 } from './styles/Profile';
 
 const Profile = () => {
+	const [{ token }] = useStateValue();
 	const [visible, setVisible] = useState(false);
 	const [updateImageModalOpen, setUpdateImageModalOpen] = useState(false);
 	const [newImage, setNewImage] = useState(null);
+	const [submissionMessage, setSubmissionMessage] = useState('');
 
 	const classes = useStyles();
 	const handleUpdateImageModal = () => {
@@ -26,16 +29,39 @@ const Profile = () => {
 		}
 	};
 
-	const updateImage = (e) => {
+	const updateImage = async (e) => {
 		e.preventDefault();
 		if (newImage === null) {
 			alert('Please upload an Image');
 		} else {
-			handleUpdateImageModal();
+			const options = {
+				method: 'PUT',
+				headers: {
+					authorization: `Bearer ${token}`,
+				},
+			};
+			await fetch(`${process.env.REACT_APP_API_URI}/users/me/photo`, options)
+				.then((response) => response.json())
+				.then((data) => {
+					if (data.success === false) {
+						setSubmissionMessage(`${data.message}`);
+					} else {
+						setSubmissionMessage(`Profile photo has been updated`);
+						// dispatch({
+						// 	type: 'SET_USER',
+						// 	action: ``
+						// })
+						handleUpdateImageModal();
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					setSubmissionMessage('Something went wrong, 500');
+				});
 		}
 	};
 
-	const handleNewImageSelect = (e, urlImg) => {
+	const handleNewImageSelect = (e) => {
 		if (e.target.files && e.target.files.length > 0) {
 			setNewImage(e.target.files[0]);
 		}
@@ -70,7 +96,8 @@ const Profile = () => {
 								<h2 style={{ textAlign: 'center' }}>Update Image</h2>
 								<Form flex flexCol w100 onSubmit={updateImage}>
 									<FormLabel flex start for='upload'>
-										Select Image
+										Select Image -
+										{!newImage ? ` No image selected` : ` ${newImage?.name}`}
 									</FormLabel>
 									<FormInput
 										id='upload'
@@ -86,6 +113,8 @@ const Profile = () => {
 									<FormButton type='submit' borderDark w100>
 										Update
 									</FormButton>
+
+									{submissionMessage && <p>{submissionMessage}</p>}
 								</Form>
 							</div>
 						</Grow>

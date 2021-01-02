@@ -12,32 +12,34 @@ import {
 } from './styles/Assignments';
 
 const Assignments = ({ match }) => {
-	const history = useHistory();
-
-	if (parseInt(match.params.page) < 1) {
-		history.push('/404');
-	}
-
 	const [visible, setVisible] = useState(false);
 	useEffect(() => {
 		setTimeout(function () {
 			setVisible(true);
 		}, 0);
 	}, []);
-	const [{ token }] = useStateValue();
+
+	const history = useHistory();
+
+	if (parseInt(match.params.page) < 1) {
+		history.push('/404');
+	}
+	const [{ token, user }] = useStateValue();
 	const [assignments, setAssignments] = useState([]);
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
+
 	useEffect(() => {
-		const url = `${process.env.REACT_APP_API_URI}/assignments?limit=20&page=1`;
+		setLoading(true);
+		const url = `${process.env.REACT_APP_API_URI}/assignments?limit=4&page=${match.params.page}`;
 		const headers = {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
 		};
 
 		getResource(url, headers, setAssignments, setLoading, setError, setData);
-	}, [token]);
+	}, [token, match.params.page, user._id]);
 	return (
 		<Grow in={visible} timeout={700}>
 			<AssignmentsContainer>
@@ -46,7 +48,11 @@ const Assignments = ({ match }) => {
 					<>
 						<AssignmentsPageTitle>Assignments</AssignmentsPageTitle>
 						<AssignmentsListContainer>
-							{loading === false ? (
+							{loading ? (
+								<>
+									<LoadingCircular />
+								</>
+							) : (
 								<>
 									{data !== null && data.count < 1 ? (
 										<>
@@ -65,7 +71,7 @@ const Assignments = ({ match }) => {
 											{data !== null && data.pagination.next && (
 												<>
 													<Link
-														to={`/lectures/page/${
+														to={`/assignments/page/${
 															parseInt(match.params.page) + 1
 														}`}
 													>
@@ -76,7 +82,7 @@ const Assignments = ({ match }) => {
 											{data !== null && data.pagination.prev && (
 												<>
 													<Link
-														to={`/lectures/page/${
+														to={`/assignments/page/${
 															parseInt(match.params.page) - 1
 														}`}
 													>
@@ -87,8 +93,6 @@ const Assignments = ({ match }) => {
 										</>
 									)}
 								</>
-							) : (
-								<LoadingCircular />
 							)}
 						</AssignmentsListContainer>
 					</>

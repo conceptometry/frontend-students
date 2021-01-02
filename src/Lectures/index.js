@@ -32,7 +32,7 @@ const Lectures = ({ match }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=10&page=${match.params.page}`;
+		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=3&page=${match.params.page}`;
 		const headers = {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,

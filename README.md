@@ -1,5 +1,5 @@
 # Conceptometry Frontend (Beta 1)
-Conceptometry is a brand that patches the vulnerability of students not being tracked while studying in the *traditional INDIAN school*. We aim to make every student *excellent* at he/her does. For this purpose we need a **tracking solution** that will track where the students performance can be improved. Last but not the least we want to provide this to every student and every teacher at an **extremely affordable cost**.
+Conceptometry is a brand that has made a product which patches the vulnerability of students not being tracked while studying in the *traditional INDIAN school*. We aim to make every student *excellent* at he/her does. For this purpose we need a **tracking solution** that will track where the students performance can be improved. Last but not the least we want to provide this to every student and every teacher at an **extremely affordable cost**.
 
 ## Frontend - Students
 #### Platform - Create React App / React JS

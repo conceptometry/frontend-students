@@ -1,72 +1,36 @@
-# Getting Started with Create React App
+# Conceptometry Frontend (Beta 1)
+Conceptometry is a brand that patches the vulnerability of students not being tracked while studying in the *traditional INDIAN school*. We aim to make every student *excellent* at he/her does. For this purpose we need a **tracking solution** that will track where the students performance can be improved. Last but not the least we want to provide this to every student and every teacher at an **extremely affordable cost**.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Frontend - Students
+#### Platform - Create React App / React JS
 
-## Available Scripts
+>The current repository houses the source code for the frontend of the application that will be visible to the students. Click **[here](https://student.conceptometry.com)** to view the deplyed version
 
-In the project directory, you can run:
+# Application Development
 
-### `npm start`
+### Deploying the application
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+>To deploy the application anyone with **current access** to the repository can merge the branch they are working to the master branch which will automatically deploy your version to the cloud server
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Application Development
 
-### `npm test`
+- Prerequisites
+	1. Having access to the repository/account
+	2. Knowing how to clone the repository
+  > It's fairly simple
+1.  Cloning the repo
+2. Installing dependencies with `npm install`
+3. Starting development server with `npm start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### Manual Application Deployment
+- Prerequisites
+	1. Having access to the repository/account
+	2. Knowing how to clone the repository
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# frontend-students" 
-"# frontend-students" 
+1.  Cloning the repo
+2. Installing dependencies with `npm install`
+3. Running build command with `npm run build`
+4. Now you will get static files in build folder
+5. Copy that build folder into your hosting directory
+  > The application is now deployed

@@ -7,13 +7,18 @@ import {
 	UserImage,
 	UserInfo,
 } from '../styles/NavIdentity';
+import { logout } from '../../../Authentication/functions/logout';
 
 const Identity = () => {
-	const [{ user }] = useStateValue();
+	const [{ user }, dispatch] = useStateValue();
+
+	const handleLogout = () => {
+		logout(dispatch);
+	};
 	return (
 		<NavIdentity>
 			<ImageContainer>
-				{user.profilePhoto === 'no-photo.jpg' ? (
+				{user !== null && user?.profilePhoto === 'no-photo.jpg' ? (
 					<>
 						<UserImage
 							src='https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-photo-183042379.jpg'
@@ -22,14 +27,17 @@ const Identity = () => {
 					</>
 				) : (
 					<>
-						<UserImage src={user.profilePhoto} alt='User' />
+						<UserImage src={user !== null && user?.profilePhoto} alt='User' />
 					</>
 				)}
 			</ImageContainer>
 
 			<UserInfo>
-				<DisplayName>Hello, Yashraj</DisplayName>
-				<SignOutButton>Sign Out</SignOutButton>
+				<DisplayName>
+					Hello,{' '}
+					<span style={{ textTransform: 'capitalize' }}>{user?.name}</span>
+				</DisplayName>
+				<SignOutButton onClick={handleLogout}>Sign Out</SignOutButton>
 			</UserInfo>
 		</NavIdentity>
 	);

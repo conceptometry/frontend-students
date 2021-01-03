@@ -1,3 +1,25 @@
 .activeLatestFeedTab {
 	border-bottom: 2px solid #111b34;
 }
+
+.loginForm input {
+	max-width: 46vw;
+	min-width: 46vw;
+}
+
+.loginForm button {
+	min-width: 46.8vw;
+	max-width: 46.8vw;
+}
+
+@media (max-width: 992px) {
+	.loginForm input {
+		min-width: 70vw;
+		max-width: 70vw;
+	}
+
+	.loginForm button {
+		min-width: 70.8vw;
+		max-width: 70.8vw;
+	}
+}

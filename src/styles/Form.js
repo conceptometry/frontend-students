@@ -19,14 +19,17 @@ export const FormInput = styled.input`
 	background: linear-gradient(to bottom right, ${PrimaryWhite}, #fbfdff);
 	font-size: 16px;
 	transition: 0.3s;
-
+	${(props) =>
+		props.error &&
+		`box-shadow: 0px 0px 1px 3px #ec7d7d;
+		transition: 0.3s;`}
 	${(props) => props.center && `margin-left: auto; margin-right: auto;`}
 	${(props) => props.mt && `margin-top: 9px;`}
 	${(props) => props.w100 && `width: 100%;`}
 	${(props) => props.flex && `display: flex;`}
 	${(props) => props.flexCol && `flex-direction: column;`}
 	${(props) => (props.border ? `border: 0.1px solid #a3a3a3;` : `border: none;`)}
-	${(props) => (!props.file ? `padding: 5px 8px;` : `padding: 4px 0px;`)}
+	${(props) => (!props.file ? `padding: 5px;` : `padding: 4px 0px;`)}
 
     &:focus {
 		${(props) =>
@@ -72,10 +75,9 @@ export const FormLabel = styled.label`
 `;
 
 export const FormButton = styled.button`
-	padding: 5px;
+	padding: 5px 5px;
 	outline: none;
 	background: #fefefe;
-	box-sizing: border-box;
 	box-shadow: 2px 3px 1px rgba(0, 0, 0, 0.25);
 	border-radius: 7px;
 	font-size: 16px;
@@ -88,6 +90,7 @@ export const FormButton = styled.button`
 		props.borderDark ? `border: 1px solid #000000;` : `border: none;`}
 	${(props) => props.flex && `display: flex;`}
 	${(props) => props.w100 && `width: 100%;`}
+	${(props) => props.center && `margin-left: auto; margin-right: auto`}
 
 	&:hover {
 		transition: 0.2s;

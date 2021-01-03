@@ -10,8 +10,10 @@ import {
 	PersonInfoTableHeading,
 	PersonInfoTableRow,
 } from '../styles/PersonInfo';
+import { useStateValue } from '../../shared/context/StateProvider';
 
 const PersonInfo = () => {
+	const [{ user }] = useStateValue();
 	const classes = useStyles();
 	const [modalOpen, setModalOpen] = useState(false);
 	const handleEditInfoModal = () => {
@@ -31,19 +33,29 @@ const PersonInfo = () => {
 				<tbody>
 					<PersonInfoTableRow>
 						<PersonInfoTableHeading pt>Name</PersonInfoTableHeading>
-						<PersonInfoTableData pt>Yashraj</PersonInfoTableData>
+						<PersonInfoTableData pt style={{ textTransform: 'capitalize' }}>
+							{user?.name}
+						</PersonInfoTableData>
 					</PersonInfoTableRow>
 					<PersonInfoTableRow>
 						<PersonInfoTableHeading>Email</PersonInfoTableHeading>
-						<PersonInfoTableData>yashrajpahwa@gmail.com</PersonInfoTableData>
+						<PersonInfoTableData>{user?.email}</PersonInfoTableData>
 					</PersonInfoTableRow>
 					<PersonInfoTableRow>
 						<PersonInfoTableHeading>Phone</PersonInfoTableHeading>
-						<PersonInfoTableData>9999395665</PersonInfoTableData>
+						<PersonInfoTableData>{user?.phone}</PersonInfoTableData>
 					</PersonInfoTableRow>
 					<PersonInfoTableRow>
 						<PersonInfoTableHeading pb>Subject</PersonInfoTableHeading>
-						<PersonInfoTableData pb>Maths, Science</PersonInfoTableData>
+						<PersonInfoTableData pb>
+							{user?.subject.map((s) => {
+								return (
+									<span style={{ textTransform: 'capitalize' }}>
+										{s + ', '}
+									</span>
+								);
+							})}
+						</PersonInfoTableData>
 					</PersonInfoTableRow>
 				</tbody>
 			</PersonInfoTable>

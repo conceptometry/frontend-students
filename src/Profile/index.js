@@ -6,6 +6,7 @@ import PasswordUpdate from './components/PasswordUpdate';
 import PersonInfo from './components/PersonInfo';
 import PersonWorkStatus from './components/PersonWorkStatus';
 import { useStateValue } from '../shared/context/StateProvider';
+import imageCompression from 'browser-image-compression';
 import {
 	EditProfileImage,
 	ProfileContainer,
@@ -20,6 +21,7 @@ const Profile = () => {
 	const [newImage, setNewImage] = useState(null);
 	const [submissionMessage, setSubmissionMessage] = useState('');
 	const [submitting, setSubmitting] = useState(false);
+	const [imageCompressing, setImageCompressing] = useState(false);
 
 	const classes = useStyles();
 	const handleUpdateImageModal = () => {
@@ -70,9 +72,24 @@ const Profile = () => {
 		}
 	};
 
-	const handleNewImageSelect = (e) => {
+	const handleNewImageSelect = async (e) => {
 		if (e.target.files && e.target.files.length > 0) {
-			setNewImage(e.target.files[0]);
+			setImageCompressing(true);
+			const imageFile = e.target.files[0];
+
+			const options = {
+				maxSizeMB: 0.3,
+				maxWidthOrHeight: 1024,
+				useWebWorker: true,
+				fileType: 'image/jpeg',
+			};
+			try {
+				const compressedFile = await imageCompression(imageFile, options);
+				await setNewImage(compressedFile);
+				setImageCompressing(false);
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
 	useEffect(() => {
@@ -127,9 +144,19 @@ const Profile = () => {
 										placeholder='Name'
 									/>
 
-									<FormButton type='submit' borderDark w100>
-										Update
-									</FormButton>
+									{imageCompressing === true ? (
+										<>
+											<FormButton disabled borderDark w100>
+												Loading...
+											</FormButton>
+										</>
+									) : (
+										<>
+											<FormButton type='submit' borderDark w100>
+												Update
+											</FormButton>
+										</>
+									)}
 
 									{submitting && (
 										<>

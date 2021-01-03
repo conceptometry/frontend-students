@@ -45,6 +45,6 @@ export const login = (
 			}
 		})
 		.catch((error) => {
-			setMessage(error);
+			setMessage(error.message);
 		});
 };

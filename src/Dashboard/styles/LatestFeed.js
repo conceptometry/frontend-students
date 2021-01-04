@@ -10,6 +10,7 @@ export const LatestFeedContainer = styled.div`
 	border-radius: 10px;
 	border: 1px solid #111;
 	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+	margin-bottom: 15px;
 `;
 
 export const LatestFeedNavbar = styled.div`

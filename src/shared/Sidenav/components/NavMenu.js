@@ -26,7 +26,7 @@ const NavMenu = () => {
 				</NavMenuItem>
 				<NavMenuItem>
 					<Tooltip title='Refresh' placement='right'>
-						<RefreshIcon />
+						<RefreshIcon onClick={() => window.location.reload()} />
 					</Tooltip>
 				</NavMenuItem>
 			</NavMenuItems>

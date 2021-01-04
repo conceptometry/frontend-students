@@ -1,4 +1,4 @@
-import NavLogo from '../images/logo/logo.png';
+import NavLogo from '../images/logo/logo.webp';
 
 const logo = NavLogo;
 

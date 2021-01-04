@@ -1,4 +1,4 @@
-const getResource = async (
+const getResource = (
 	url,
 	headers,
 	setResource,
@@ -6,7 +6,7 @@ const getResource = async (
 	setError,
 	setData
 ) => {
-	await fetch(url, {
+	fetch(url, {
 		method: 'GET', // or 'PUT'
 		headers: headers,
 	})
@@ -24,11 +24,13 @@ const getResource = async (
 					setError('Something went wrong, 400');
 				}
 			}
-			if (setData) {
+			if (setData && data !== undefined && data) {
 				setData(data);
 			}
 			if (setLoading) {
-				setLoading(false);
+				setTimeout(() => {
+					setLoading(false);
+				}, 300);
 			}
 		})
 		.catch((error) => {
@@ -38,7 +40,9 @@ const getResource = async (
 			}
 			console.log(error);
 			if (setLoading) {
-				setLoading(false);
+				setTimeout(() => {
+					setLoading(false);
+				}, 100);
 			}
 		});
 };

@@ -43,7 +43,7 @@ const LatestAssignments = () => {
 									id={a._id}
 								/>
 							))}
-							<ViewAllBtn to='/'>View all</ViewAllBtn>
+							<ViewAllBtn to='/assignments'>View all</ViewAllBtn>
 						</>
 					)}
 				</>

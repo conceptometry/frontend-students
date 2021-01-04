@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
+import { logout } from './Authentication/functions/logout';
 import Routes from './Routes';
 import { useStateValue } from './shared/context/StateProvider';
 import { LoadingScreen } from './shared/Loading';
@@ -56,11 +57,25 @@ const App = () => {
 
 		getUser();
 	}, [token, dispatch]);
+
 	return (
 		<>
 			<Suspense fallback={<LoadingScreen />}>
 				<GlobalStyles />
-				{error && <p>{error}</p>}
+				{error && (
+					<p>
+						{error},{' '}
+						<span
+							onClick={() => {
+								logout(dispatch);
+								window.location.reload();
+							}}
+							style={{ color: 'blue', cursor: 'pointer' }}
+						>
+							Logout
+						</span>
+					</p>
+				)}
 				{!error && (
 					<>
 						<BiggerScreenPageContainer>

@@ -33,7 +33,7 @@ const Assignments = ({ match }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const url = `${process.env.REACT_APP_API_URI}/assignments?limit=1&page=${match.params.page}&sort=-dueDate`;
+		const url = `${process.env.REACT_APP_API_URI}/assignments?limit=10&page=${match.params.page}&sort=-dueDate`;
 		const headers = {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,

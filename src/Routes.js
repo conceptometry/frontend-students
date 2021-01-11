@@ -44,6 +44,8 @@ const Routes = () => {
 	const NotFound = lazy(() => import('./shared/404'));
 	const Login = lazy(() => import('./Authentication/pages/Login'));
 	const SingleAssignment = lazy(() => import('./SingleAssignment'));
+	const SingleLecture = lazy(() => import('./SingleLecture'));
+
 	const [{ token }] = useStateValue();
 	return (
 		<Suspense fallback={<LoadingScreen />}>
@@ -68,6 +70,23 @@ const Routes = () => {
 								<Sidenav />
 								<PageWithNavbar>
 									<SingleAssignment match={match} />
+								</PageWithNavbar>
+							</>
+						) : (
+							<Redirect to={`/login?to=${location.pathname}`} />
+						);
+					}}
+				/>
+
+				<Route
+					exact
+					path='/lectures/:id'
+					render={({ match, location }) => {
+						return token !== null ? (
+							<>
+								<Sidenav />
+								<PageWithNavbar>
+									<SingleLecture match={match} />
 								</PageWithNavbar>
 							</>
 						) : (

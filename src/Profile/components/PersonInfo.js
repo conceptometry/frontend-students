@@ -48,9 +48,9 @@ const PersonInfo = () => {
 					<PersonInfoTableRow>
 						<PersonInfoTableHeading pb>Subject</PersonInfoTableHeading>
 						<PersonInfoTableData pb>
-							{user?.subject.map((s) => {
+							{user?.subject.map((s, i) => {
 								return (
-									<span style={{ textTransform: 'capitalize' }}>
+									<span key={i} style={{ textTransform: 'capitalize' }}>
 										{s + ', '}
 									</span>
 								);

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../shared/context/StateProvider';
 import { LoadingCircular } from '../shared/Loading';
-import getResource from '../shared/Requests/getResource';
 import AssignmentDescription from './components/AssignmentDescription';
 import AssignmentInfo from './components/AssignmentInfo';
 import AssignmentIntro from './components/AssignmentIntro';
@@ -22,7 +21,27 @@ const SingleAssignment = ({ match }) => {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
 		};
-		getResource(url, headers, setAssignment, setLoading, setError, setData);
+		const options = {
+			method: 'GET',
+			headers,
+		};
+		fetch(url, options)
+			.then((promise) => promise.json())
+			.then((data) => {
+				if (data.success === true) {
+					setAssignment(data.message);
+					setError('');
+					setData(data);
+				} else {
+					setAssignment([]);
+					setError('Something went wrong, 400');
+				}
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+				setError('Failed to get data, 500');
+			});
 	}, [match.params.id, token]);
 
 	const history = useHistory();

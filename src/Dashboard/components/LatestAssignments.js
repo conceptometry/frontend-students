@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useStateValue } from '../../shared/context/StateProvider';
 import AssignmentList from '../../shared/Lists/Assignment';
 import { LoadingCircular } from '../../shared/Loading';
-import getResource from '../../shared/Requests/getResource';
 import {
 	LatestAssignmentsContainer,
 	ViewAllBtn,
@@ -20,8 +19,26 @@ const LatestAssignments = () => {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
 		};
-
-		getResource(url, headers, setAssignments, setLoading, setError);
+		const options = {
+			method: 'GET',
+			headers,
+		};
+		fetch(url, options)
+			.then((promise) => promise.json())
+			.then((data) => {
+				if (data.success === true) {
+					setAssignments(data.message);
+					setError('');
+				} else {
+					setAssignments([]);
+					setError('Something went wrong, 400');
+				}
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+				setError('Failed to get data, 500');
+			});
 	}, [token]);
 	return (
 		<LatestAssignmentsContainer>

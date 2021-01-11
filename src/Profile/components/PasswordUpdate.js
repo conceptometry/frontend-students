@@ -7,10 +7,10 @@ import { useState } from 'react';
 import { LinearProgress } from '@material-ui/core';
 
 const PasswordUpdate = () => {
-	const [{ token }] = useStateValue();
+	const [{ token }, dispatch] = useStateValue();
 	const [data, setData] = useState('');
 	const [loading, setLoading] = useState(false);
-	const { register, handleSubmit, errors } = useForm();
+	const { register, handleSubmit, errors, reset } = useForm();
 	const handleUpdatePassword = (data) => {
 		console.log(data);
 		const url = `${process.env.REACT_APP_API_URI}/users/me/password`;
@@ -22,7 +22,8 @@ const PasswordUpdate = () => {
 			},
 			body: JSON.stringify(data),
 		};
-		postResource(url, options, setData, setLoading);
+		postResource(url, options, setData, setLoading, 'null', 'null', dispatch);
+		reset();
 	};
 	return (
 		<PasswordUpdateContainer>

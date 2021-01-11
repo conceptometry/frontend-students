@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useStateValue } from '../../shared/context/StateProvider';
 import { LoadingCircular } from '../../shared/Loading';
-import getResource from '../../shared/Requests/getResource';
 import { PersonWorkStatusContainer } from '../styles/PersonWorkStatus';
 
 const PersonWorkStatus = () => {
@@ -16,7 +15,26 @@ const PersonWorkStatus = () => {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
 		};
-		getResource(url, headers, setLecture, setLoading, setError);
+		const options = {
+			method: 'GET',
+			headers,
+		};
+		fetch(url, options)
+			.then((promise) => promise.json())
+			.then((data) => {
+				if (data.success === true) {
+					setLecture(data.message);
+					setError('');
+				} else {
+					setLecture([]);
+					setError('Something went wrong, 400');
+				}
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+				setError('Failed to get data, 500');
+			});
 	}, [token]);
 
 	const lecturetime = new Date(lecture?.eventTime);

@@ -4,7 +4,6 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useStateValue } from '../shared/context/StateProvider';
 import LectureList from '../shared/Lists/Lecture';
 import { LoadingCircular } from '../shared/Loading';
-import getResource from '../shared/Requests/getResource';
 import {
 	LecturesContainer,
 	LecturesListContainer,
@@ -37,9 +36,32 @@ const Lectures = ({ match }) => {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
 		};
-
-		getResource(url, headers, setLectures, setLoading, setError, setData);
+		const options = {
+			method: 'GET',
+			headers,
+		};
+		fetch(url, options)
+			.then((promise) => promise.json())
+			.then((data) => {
+				if (data.success === true) {
+					setLectures(data.message);
+					setError('');
+					setData(data);
+				} else {
+					setLectures([]);
+					setError('Something went wrong, 400');
+				}
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+				setError('Failed to get data, 500');
+			});
 	}, [token, match.params.page]);
+
+	if (loading === false && match.params.page > data?.pages) {
+		return <Redirect to='/404' />;
+	}
 
 	return (
 		<Grow in={visible} timeout={700}>
@@ -55,52 +77,44 @@ const Lectures = ({ match }) => {
 						) : (
 							<>
 								<LecturesListContainer>
-									{data !== null && data.count < 1 ? (
-										<>
-											<Redirect to='/404' />
-										</>
-									) : (
-										<>
-											{lectures.map((l) => (
-												<>
-													<LectureList
-														key={l._id.toString()}
-														title={l.name}
-														eventTime={l.eventTime}
-														duration={l.duration}
-														id={l._id}
-													/>
-												</>
-											))}
-											{data !== null && data.pagination.next && (
-												<>
-													<Link
-														to={`/lectures/page/${
-															parseInt(match.params.page) + 1
-														}`}
-													>
-														Next
-													</Link>
-												</>
-											)}
-											{data !== null && data.pagination.prev && (
-												<>
-													<Link
-														to={`/lectures/page/${
-															parseInt(match.params.page) - 1
-														}`}
-													>
-														Previous
-													</Link>
-												</>
-											)}
-											{data !== null && data.pages && (
-												<>
-													<p>Pages: {data.pages}</p>
-												</>
-											)}
-										</>
-									)}
+									<>
+										{lectures.map((l) => (
+											<LectureList
+												key={l._id.toString()}
+												title={l.name}
+												eventTime={l.eventTime}
+												duration={l.duration}
+												id={l._id}
+											/>
+										))}
+										{data !== null && data.pagination.next && (
+											<>
+												<Link
+													to={`/lectures/page/${
+														parseInt(match.params.page) + 1
+													}`}
+												>
+													Next
+												</Link>
+											</>
+										)}
+										{data !== null && data.pagination.prev && (
+											<>
+												<Link
+													to={`/lectures/page/${
+														parseInt(match.params.page) - 1
+													}`}
+												>
+													Previous
+												</Link>
+											</>
+										)}
+										{data !== null && data.pages && (
+											<>
+												<p>Pages: {data.pages}</p>
+											</>
+										)}
+									</>
 								</LecturesListContainer>
 							</>
 						)}

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useStateValue } from '../../shared/context/StateProvider';
 import LectureList from '../../shared/Lists/Lecture';
 import { LoadingCircular } from '../../shared/Loading';
-import getResource from '../../shared/Requests/getResource';
 import { LatestLecturesContainer, ViewAllBtn } from '../styles/LatestLectures';
 
 const LatestLectures = () => {
@@ -17,8 +16,26 @@ const LatestLectures = () => {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
 		};
-
-		getResource(url, headers, setLectures, setLoading, setError);
+		const options = {
+			method: 'GET',
+			headers,
+		};
+		fetch(url, options)
+			.then((promise) => promise.json())
+			.then((data) => {
+				if (data.success === true) {
+					setLectures(data.message);
+					setError('');
+				} else {
+					setLectures([]);
+					setError('Something went wrong, 400');
+				}
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+				setError('Failed to get data, 500');
+			});
 	}, [token]);
 	return (
 		<LatestLecturesContainer>
@@ -33,15 +50,13 @@ const LatestLectures = () => {
 					) : (
 						<>
 							{lectures.map((l) => (
-								<>
-									<LectureList
-										key={l._id.toString()}
-										title={l.name}
-										eventTime={l.eventTime}
-										duration={l.duration}
-										id={l._id}
-									/>
-								</>
+								<LectureList
+									key={l._id}
+									title={l.name}
+									eventTime={l.eventTime}
+									duration={l.duration}
+									id={l._id}
+								></LectureList>
 							))}
 							<ViewAllBtn to='/lectures'>View all</ViewAllBtn>
 						</>

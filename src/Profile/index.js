@@ -1,4 +1,4 @@
-import { Backdrop, Grow, LinearProgress, Modal } from '@material-ui/core';
+import { Backdrop, Grow, Modal } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { Form, FormButton, FormInput, FormLabel } from '../styles/Form';
 import { useStyles } from '../styles/MaterialUI-theme';
@@ -129,7 +129,7 @@ const Profile = () => {
 							<div className={classes.paper}>
 								<h2 style={{ textAlign: 'center' }}>Update Image</h2>
 								<Form flex flexCol w100 onSubmit={updateImage}>
-									<FormLabel flex start for='upload'>
+									<FormLabel flex start='true'>
 										Select Image -
 										{!newImage ? ` No image selected` : ` ${newImage?.name}`}
 									</FormLabel>
@@ -152,15 +152,19 @@ const Profile = () => {
 										</>
 									) : (
 										<>
-											<FormButton type='submit' borderDark w100>
-												Update
-											</FormButton>
-										</>
-									)}
-
-									{submitting && (
-										<>
-											<LinearProgress style={{ width: '100%' }} />
+											{submitting ? (
+												<>
+													<FormButton borderDark disabled w100>
+														Uploading...
+													</FormButton>
+												</>
+											) : (
+												<>
+													<FormButton type='submit' borderDark w100>
+														Update
+													</FormButton>
+												</>
+											)}
 										</>
 									)}
 

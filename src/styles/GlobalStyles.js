@@ -32,7 +32,7 @@ export const GlobalStyles = createGlobalStyle`
 
 export const AppContainer = styled.section`
 	@media (max-width: 768px) {
-		display: none;
+		/* display: none; */
 	}
 `;
 

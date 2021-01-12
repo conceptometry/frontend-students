@@ -10,4 +10,9 @@ export const PageWithNavbar = styled.div`
 		margin-left: 240px;
 		transition: 0.5s;
 	}
+
+	@media (max-width: 768px) {
+		margin-left: 0px;
+		transition: all 0.3s ease;
+	}
 `;

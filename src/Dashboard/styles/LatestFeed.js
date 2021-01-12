@@ -11,6 +11,15 @@ export const LatestFeedContainer = styled.div`
 	border: 1px solid #111;
 	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
 	margin-bottom: 15px;
+
+	@media (max-width: 768px) {
+		min-width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		border: none;
+		border-radius: 0px;
+		box-shadow: none;
+	}
 `;
 
 export const LatestFeedNavbar = styled.div`
@@ -47,4 +56,9 @@ export const LatestFeedContent = styled.div`
 	flex-direction: column;
 	padding-left: 8px;
 	padding-right: 8px;
+
+	@media (max-width: 768px) {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
 `;

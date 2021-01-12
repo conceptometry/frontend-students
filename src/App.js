@@ -78,9 +78,9 @@ const App = () => {
 				)}
 				{!error && (
 					<>
-						<BiggerScreenPageContainer>
+						{/* <BiggerScreenPageContainer>
 							<BiggerScreenPage />
-						</BiggerScreenPageContainer>
+						</BiggerScreenPageContainer> */}
 						<AppContainer>
 							<>
 								<Routes />

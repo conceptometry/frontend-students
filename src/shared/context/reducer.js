@@ -6,6 +6,7 @@ const parsedToken = JSON.parse(token);
 export const initialState = {
 	user: parsedUser || null,
 	token: parsedToken || null,
+	navOpen: false,
 	error: [],
 };
 
@@ -16,6 +17,12 @@ const reducer = (state, action) => {
 				...state,
 				user: action.user,
 				token: action.token,
+			};
+
+		case 'SET_NAV_OPEN':
+			return {
+				...state,
+				navOpen: action.navOpen,
 			};
 
 		case 'SET_ERROR':

@@ -15,6 +15,10 @@ export const PersonInfoContainer = styled.div`
 	justify-content: center;
 
 	${(props) => props.border && `border: 1px solid #111;`}
+
+	@media (max-width: 768px) {
+		display: none;
+	}
 `;
 
 export const PersonInfoTable = styled.table`

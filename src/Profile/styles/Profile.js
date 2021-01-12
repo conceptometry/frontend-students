@@ -34,6 +34,13 @@ export const ProfileInfo = styled.div`
 		margin-right: 1rem;
 		margin-left: 1rem;
 	}
+
+	@media (max-width: 768px) {
+		padding: 0px;
+		background: transparent;
+		border: none;
+		box-shadow: none;
+	}
 `;
 
 export const ProfileImage = styled.img`

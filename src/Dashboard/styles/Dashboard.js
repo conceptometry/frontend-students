@@ -6,6 +6,9 @@ export const DashboardContainer = styled.section`
 	flex-direction: column;
 	margin-right: auto;
 	margin-left: auto;
+	@media (max-width: 768px) {
+		width: 100%;
+	}
 `;
 
 export const DashboardIntroduction = styled.div`
@@ -25,6 +28,13 @@ export const DashboardIntroduction = styled.div`
 	max-width: 50%;
 	margin-right: auto;
 	margin-left: auto;
+
+	@media (max-width: 768px) {
+		max-width: 70%;
+		min-width: 70%;
+		width: 70%;
+		margin-top: 55px;
+	}
 `;
 
 export const DashboardIntroductionHeading = styled.h2`

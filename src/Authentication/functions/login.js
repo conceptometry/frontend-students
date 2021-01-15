@@ -20,9 +20,7 @@ export const login = (
 				setMessage(data.message);
 			} else {
 				if (data.user.role !== 'student') {
-					setMessage({
-						message: 'Only students are allowed to access this dashboard',
-					});
+					setMessage('Only students are allowed to access this dashboard');
 				} else {
 					setMessage(data.message);
 					if (

@@ -31,7 +31,7 @@ const Lectures = ({ match }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=10&page=${match.params.page}&sort=eventTime`;
+		const url = `${process.env.REACT_APP_API_URI}/lectures?limit=1&page=${match.params.page}&sort=eventTime`;
 		const headers = {
 			'Content-Type': 'application/json',
 			authorization: `Bearer ${token}`,
@@ -59,9 +59,11 @@ const Lectures = ({ match }) => {
 			});
 	}, [token, match.params.page]);
 
-	if (loading === false && match.params.page > data?.pages) {
-		return <Redirect to='/404' />;
-	}
+	useEffect(() => {
+		if (loading === false && match.params.page > data?.pages) {
+			return <Redirect to='/404' />;
+		}
+	}, [loading, data, match.params.page]);
 
 	return (
 		<Grow in={visible} timeout={700}>

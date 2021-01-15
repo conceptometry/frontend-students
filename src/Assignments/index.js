@@ -32,37 +32,6 @@ const Assignments = ({ match }) => {
 
 	useEffect(() => {
 		setLoading(true);
-		const url = `${process.env.REACT_APP_API_URI}/assignments?limit=10&page=${match.params.page}&sort=-dueDate`;
-
-		const headers = {
-			'Content-Type': 'application/json',
-			authorization: `Bearer ${token}`,
-		};
-		const options = {
-			method: 'GET',
-			headers,
-		};
-		fetch(url, options)
-			.then((promise) => promise.json())
-			.then((data) => {
-				if (data.success === true) {
-					setAssignments(data.message);
-					setError('');
-				} else {
-					setAssignments([]);
-					setError('Something went wrong, 400');
-				}
-				setData(data);
-				setLoading(false);
-			})
-			.catch((err) => {
-				console.log('Error: ', err);
-				setError('Failed to get data, 500');
-			});
-	}, [token, match.params.page, user._id]);
-
-	useEffect(() => {
-		setLoading(true);
 		const url = `${
 			process.env.REACT_APP_API_URI
 		}/assignments?limit=10&page=1&sort=-dueDate&dueDate=${new Date()}`;
@@ -94,11 +63,49 @@ const Assignments = ({ match }) => {
 				console.log('Error: ', err);
 				setError('Failed to get data, 500');
 			});
-	}, [token, user._id]);
+	}, [token]);
 
-	if (loading === false && data.pages < match.params.page) {
-		return <Redirect to='/404' />;
-	}
+	useEffect(() => {
+		setLoading(true);
+		const url = `${process.env.REACT_APP_API_URI}/assignments?limit=1&page=${match.params.page}&sort=-dueDate`;
+
+		const headers = {
+			'Content-Type': 'application/json',
+			authorization: `Bearer ${token}`,
+		};
+		const options = {
+			method: 'GET',
+			headers,
+		};
+		fetch(url, options)
+			.then((promise) => promise.json())
+			.then((data) => {
+				if (data.success === true) {
+					setAssignments(data.message);
+					setError('');
+				} else {
+					setAssignments([]);
+					setError('Something went wrong, 400');
+				}
+				setData(data);
+				setLoading(false);
+			})
+			.catch((err) => {
+				console.log('Error: ', err);
+				setError('Failed to get data, 500');
+			});
+	}, [token, match.params.page]);
+
+	const [totalPages, setTotalPages] = useState('');
+
+	useEffect(() => {
+		if (loading === false && data.pages < match.params.page) {
+			return <Redirect to='/404' />;
+		}
+
+		setTotalPages(data.pages);
+	}, [loading, data.pages, match.params.page]);
+
 	return (
 		<Grow in={visible} timeout={700}>
 			<AssignmentsContainer>
@@ -171,30 +178,28 @@ const Assignments = ({ match }) => {
 																</Link>
 															</>
 														)}
-													{data !== [] &&
-														data &&
-														data !== undefined &&
-														data?.pagination.prev && (
-															<>
-																<Link
-																	to={`/assignments/page/${
-																		parseInt(match.params.page) - 1
-																	}`}
-																>
-																	Previous
-																</Link>
-															</>
-														)}
+													{data?.pagination.prev && (
+														<>
+															<Link
+																to={`/assignments/page/${
+																	parseInt(match.params.page) - 1
+																}`}
+															>
+																Previous
+															</Link>
+														</>
+													)}
 												</>
 											)}
-											{data !== [] &&
-												data &&
-												data !== undefined &&
-												data?.pages && (
-													<>
-														<p>Pages: {data.pages}</p>
-													</>
-												)}
+											{loading !== true && data && (
+												<>
+													{data !== null && data.pages && (
+														<>
+															<p>Pages: {totalPages}</p>
+														</>
+													)}
+												</>
+											)}
 										</>
 									)}
 								</>

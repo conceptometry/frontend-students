@@ -1,7 +1,7 @@
+import { memo, useState } from 'react';
 import { logo } from '../../global/logo';
-import { useStateValue } from '../context/StateProvider';
+import { Tooltip } from '@material-ui/core';
 import Identity from './components/Identity';
-import NavMenu from './components/NavMenu';
 import {
 	MobileNavToggleContainer,
 	NavClosedIcon,
@@ -10,20 +10,21 @@ import {
 	NavOpenIcon,
 	Sidebar,
 } from './styles/Sidenav';
+import {
+	NavMenuContainer,
+	NavMenuItem,
+	NavMenuItems,
+	NavMenuLink,
+	RefreshIcon,
+} from './styles/NavMenu';
 
-const Sidenav = () => {
-	const [{ navOpen }, dispatch] = useStateValue();
+const Sidenav = memo(() => {
+	const [navOpen, setNavOpen] = useState(false);
 	const handleNavToggle = () => {
 		if (navOpen === true) {
-			dispatch({
-				type: 'SET_NAV_OPEN',
-				navOpen: false,
-			});
+			setNavOpen(false);
 		} else {
-			dispatch({
-				type: 'SET_NAV_OPEN',
-				navOpen: true,
-			});
+			setNavOpen(true);
 		}
 	};
 	return (
@@ -36,10 +37,38 @@ const Sidenav = () => {
 					<NavLogo src={logo} alt='Conceptometry Logo' />
 				</NavLink>
 				<Identity />
-				<NavMenu />
+				<NavMenuContainer>
+					<NavMenuItems>
+						<NavMenuItem>
+							<NavMenuLink onClick={handleNavToggle} to='/'>
+								Home
+							</NavMenuLink>
+						</NavMenuItem>
+						<NavMenuItem>
+							<NavMenuLink onClick={handleNavToggle} to='/assignments'>
+								Assignments
+							</NavMenuLink>
+						</NavMenuItem>
+						<NavMenuItem>
+							<NavMenuLink onClick={handleNavToggle} to='/lectures'>
+								Lectures
+							</NavMenuLink>
+						</NavMenuItem>
+						<NavMenuItem>
+							<NavMenuLink onClick={handleNavToggle} to='/profile'>
+								My Profile
+							</NavMenuLink>
+						</NavMenuItem>
+						<NavMenuItem>
+							<Tooltip title='Refresh' placement='right'>
+								<RefreshIcon onClick={() => window.location.reload()} />
+							</Tooltip>
+						</NavMenuItem>
+					</NavMenuItems>
+				</NavMenuContainer>
 			</Sidebar>
 		</>
 	);
-};
+});
 
 export default Sidenav;

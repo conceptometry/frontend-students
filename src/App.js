@@ -1,17 +1,11 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { logout } from './Authentication/functions/logout';
 import Routes from './Routes';
 import { useStateValue } from './shared/context/StateProvider';
 import { LoadingScreen } from './shared/Loading';
-import {
-	AppContainer,
-	BiggerScreenPageContainer,
-	GlobalStyles,
-} from './styles/GlobalStyles';
+import { AppContainer, GlobalStyles } from './styles/GlobalStyles';
 
 const App = () => {
-	const BiggerScreenPage = lazy(() => import('./shared/BiggerScreenPage'));
-
 	const [error, setError] = useState('');
 
 	// Main Logic

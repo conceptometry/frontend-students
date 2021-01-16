@@ -1,9 +1,9 @@
-import { Backdrop, Modal, Grow } from '@material-ui/core';
-import { useState } from 'react';
-import { useStyles } from '../../styles/MaterialUI-theme';
-import { Form, FormButton, FormInput, FormLabel } from '../../styles/Form';
+// import { Backdrop, Modal, Grow } from '@material-ui/core';
+// import { useState } from 'react';
+// import { useStyles } from '../../styles/MaterialUI-theme';
+// import { Form, FormButton, FormInput, FormLabel } from '../../styles/Form';
 import {
-	EditProfileInfo,
+	// EditProfileInfo,
 	PersonInfoContainer,
 	PersonInfoTable,
 	PersonInfoTableData,
@@ -14,19 +14,19 @@ import { useStateValue } from '../../shared/context/StateProvider';
 
 const PersonInfo = () => {
 	const [{ user }] = useStateValue();
-	const classes = useStyles();
-	const [modalOpen, setModalOpen] = useState(false);
-	const handleEditInfoModal = () => {
-		if (modalOpen === true) {
-			setModalOpen(false);
-		} else {
-			setModalOpen(true);
-		}
-	};
-	const updateInfo = (e) => {
-		e.preventDefault();
-		handleEditInfoModal();
-	};
+	// const classes = useStyles();
+	// const [modalOpen, setModalOpen] = useState(false);
+	// const handleEditInfoModal = () => {
+	// 	if (modalOpen === true) {
+	// 		setModalOpen(false);
+	// 	} else {
+	// 		setModalOpen(true);
+	// 	}
+	// };
+	// const updateInfo = (e) => {
+	// 	e.preventDefault();
+	// 	handleEditInfoModal();
+	// };
 	return (
 		<PersonInfoContainer>
 			<PersonInfoTable>
@@ -60,7 +60,7 @@ const PersonInfo = () => {
 				</tbody>
 			</PersonInfoTable>
 
-			<EditProfileInfo onClick={handleEditInfoModal}>
+			{/* <EditProfileInfo onClick={handleEditInfoModal}>
 				Edit Information
 			</EditProfileInfo>
 			<Modal
@@ -122,7 +122,7 @@ const PersonInfo = () => {
 						</Form>
 					</div>
 				</Grow>
-			</Modal>
+			</Modal> */}
 		</PersonInfoContainer>
 	);
 };

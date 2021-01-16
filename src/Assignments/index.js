@@ -23,7 +23,7 @@ const Assignments = ({ match }) => {
 	if (parseInt(match.params.page) < 1) {
 		history.push('/404');
 	}
-	const [{ token, user }] = useStateValue();
+	const [{ token }] = useStateValue();
 	const [assignments, setAssignments] = useState([]);
 	const [data, setData] = useState([]);
 	const [todayAssignments, setTodayAssignments] = useState([]);

@@ -80,14 +80,6 @@ export default function ResponsiveDrawer(props: Props) {
             <ListItemText primary={"Lectures"} />
           </ListItem>
         </Link>
-        <Link href="/students">
-          <ListItem button key={"Students"}>
-            {/* <ListItemIcon>
-						{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-					</ListItemIcon> */}
-            <ListItemText primary={"Students"} />
-          </ListItem>
-        </Link>
         <Link href="/profile">
           <ListItem button key={"Profile"}>
             {/* <ListItemIcon>
@@ -165,18 +157,6 @@ export default function ResponsiveDrawer(props: Props) {
               onMouseOut={() => setDropdownOpen(false)}
             >
               <ul className="text-black-50 list-unstyled text-decoration-none py-2 mb-0">
-                <hr />
-                <Link href="/students/add">
-                  <a>
-                    <li className="text-black-50 px-2">Add Student</li>
-                  </a>
-                </Link>
-                <hr />
-                <Link href="/students">
-                  <a>
-                    <li className="text-black-50 px-2">View All Students</li>
-                  </a>
-                </Link>
                 <hr />
                 <li className="text-black-50 px-2">Edit Profile</li>
                 <hr />

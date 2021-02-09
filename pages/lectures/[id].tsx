@@ -1,10 +1,9 @@
 import { Button } from "@material-ui/core";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import InfoBlock from "../../src/components/blocks/InfoBlock";
 import Sidebar from "../../src/components/Sidebar";
-import { useCookies } from "react-cookie";
 
 export const getServerSideProps = async (ctx) => {
   const isLoggedIn = ctx.req.headers.cookie;
@@ -62,40 +61,6 @@ const singleLecture = ({ data }) => {
   weekday[5] = "Friday";
   weekday[6] = "Saturday";
 
-  const [deleting, setDeleting] = useState(false);
-  const [response, setResponse] = useState("");
-  const [cookies] = useCookies(["token"]);
-  const deleteLecture = async (e) => {
-    e.preventDefault();
-    setDeleting(true);
-    const url = `${process.env.NEXT_PUBLIC_API_URI}/lectures/${id}`;
-    const options = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${cookies.token}`,
-      },
-    };
-
-    try {
-      const res = await fetch(url, options);
-      const resJson = await res.json();
-      if (resJson.success === true) {
-        setResponse(resJson.message);
-        router.push("/lectures");
-        setDeleting(false);
-      } else {
-        console.log(resJson.message);
-        setResponse(resJson.message);
-        setDeleting(false);
-      }
-    } catch (e) {
-      console.log(e);
-      const message = `An error has occured: 50X`;
-      setResponse(message);
-      setDeleting(false);
-    }
-  };
   return (
     <>
       <Head>
@@ -148,40 +113,6 @@ const singleLecture = ({ data }) => {
                     info={data.message[0].student.map((m) => m.name + ", ")}
                   />
                 </div>
-                <div className="d-flex mx-3 my-2">
-                  <button className="btn btn-primary bg-gradient btn-block w-100 mx-2">
-                    Edit Lecture
-                  </button>
-
-                  {deleting === true ? (
-                    <>
-                      <button
-                        onClick={deleteLecture}
-                        className="btn btn-danger bg-gradient btn-block w-100 mx-2"
-                      >
-                        <span
-                          className="spinner-border spinner-border-sm my-auto mx-auto"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        onClick={deleteLecture}
-                        className="btn btn-danger bg-gradient btn-block w-100 mx-2"
-                      >
-                        Delete Lecture
-                      </button>
-                    </>
-                  )}
-                </div>
-                {response && (
-                  <>
-                    <p className="text-center">{response}</p>
-                  </>
-                )}
               </div>
             </>
           ) : (

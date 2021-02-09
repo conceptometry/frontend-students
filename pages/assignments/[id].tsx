@@ -55,14 +55,15 @@ const SingleAssignment = ({ data }) => {
   const { id } = router.query;
 
   const [submitting, setSubmitting] = useState(false);
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState([]);
   const [cookies] = useCookies(["token"]);
-  const deleteAssignment = async (e) => {
+  const [resLoaded, setResLoaded] = useState(false);
+  const viewSubmission = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    const url = `${process.env.NEXT_PUBLIC_API_URI}/assignments/${router.query.id}`;
+    const url = `${process.env.NEXT_PUBLIC_API_URI}/submissions/get/${router.query.id}/my`;
     const options = {
-      method: "DELETE",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${cookies.token}`,
@@ -73,17 +74,15 @@ const SingleAssignment = ({ data }) => {
       const resJson = await res.json();
       if (resJson.success === true) {
         setResponse(resJson.message);
-        router.push("/assignments");
         setSubmitting(false);
+        console.log(response);
+        setResLoaded(true);
       } else {
         console.log(resJson.message);
-        setResponse(resJson.message);
         setSubmitting(false);
       }
     } catch (e) {
       console.log(e);
-      setResponse(e.message);
-
       setSubmitting(false);
     }
   };
@@ -122,13 +121,7 @@ const SingleAssignment = ({ data }) => {
                 {data.message.description}
               </p>
               <hr />
-              <h3 className="mx-4">Students</h3>
-              {data.message.student.map((s, i) => (
-                <p className="mx-4 my-1 mt-1" key={i} style={{ fontSize: 16 }}>
-                  {`${s.name},`}
-                </p>
-              ))}
-              <hr />
+
               <br />
               <div className="d-flex flex-lg-row flex-column mx-3">
                 <InfoBlock name={"Due Date"} info={formattedDate} />
@@ -175,28 +168,17 @@ const SingleAssignment = ({ data }) => {
                   size="medium"
                   className="mx-0 mx-md-1 w-100 outline-none bg-primary bg-gradient text-white"
                 >
-                  Edit Assignment
+                  Submit Assignment
                 </Button>
-                <Link href={`/assignments/submissions/${id}`}>
-                  <Button
-                    variant="outlined"
-                    size="medium"
-                    className="mx-0 mx-md-1 mt-2 mt-md-0 w-100 outline-none bg-primary bg-gradient text-white"
-                  >
-                    View Submissions
-                  </Button>
-                </Link>
-              </div>
-              <div className="d-flex flex-column flex-md-row mx-3 mt-3">
-                {submitting === true ? (
+
+                {submitting ? (
                   <>
                     <Button
                       variant="outlined"
                       size="medium"
-                      className="mx-0 mx-md-1 w-100 outline-none bg-danger bg-gradient text-white"
-                      disabled
+                      className="mx-0 mx-md-1 mt-2 mt-md-0 w-100 outline-none bg-primary bg-gradient text-white"
+                      onClick={viewSubmission}
                     >
-                      {" "}
                       <span
                         className="spinner-border spinner-border-sm my-auto mx-auto"
                         role="status"
@@ -209,16 +191,99 @@ const SingleAssignment = ({ data }) => {
                     <Button
                       variant="outlined"
                       size="medium"
-                      className="mx-0 mx-md-1 w-100 outline-none bg-danger bg-gradient text-white"
-                      onClick={deleteAssignment}
+                      className="mx-0 mx-md-1 mt-2 mt-md-0 w-100 outline-none bg-primary bg-gradient text-white"
+                      onClick={viewSubmission}
                     >
-                      Delete Assignment
+                      View My Submission
                     </Button>
                   </>
                 )}
               </div>
-              {response && <p className="text-center">{response}</p>}
-              <br />
+              {resLoaded && (
+                <>
+                  {response.length === 0 ? (
+                    <>
+                      <p className="text-center mt-2">
+                        You haven't submitted the assignment yet
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <hr />
+                      <div className="container">
+                        <div className="intro d-md-flex justify-content-between">
+                          <div className="byUser">
+                            <h3 className="my-auto">{data.message.name}</h3>
+                          </div>
+
+                          <div className="late">
+                            {response[0].late ? (
+                              <>
+                                <h6>
+                                  <span className="badge rounded-pill bg-danger bg-gradient px-3 py-2 my-auto">
+                                    Late
+                                  </span>
+                                </h6>
+                              </>
+                            ) : (
+                              <>
+                                <h6>
+                                  <span className="badge rounded-pill bg-primary bg-gradient px-3 py-2 my-auto">
+                                    On Time
+                                  </span>
+                                </h6>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="container">
+                        <h4>Submission Text</h4>
+                        <p>{response[0].submissionText}</p>
+                      </div>
+                      <div className="d-flex flex-lg-row flex-column mw-100">
+                        <InfoBlock
+                          name={"Submission Date"}
+                          info={response[0].remarks}
+                        />
+                        <div
+                          className="w-100 border border-primary border-2 bg-infoblock p-3 mx-md-2 d-flex flex-column mt-lg-0 mt-3"
+                          style={{ borderRadius: 12, minHeight: 190 }}
+                        >
+                          <p className="mx-auto mt-3" style={{ fontSize: 18 }}>
+                            {"Reference Materials"}
+                          </p>
+
+                          {data.message.teacherMaterials ===
+                          "No file has been uploaded" ? (
+                            <>
+                              <p
+                                className="m-auto text-center"
+                                style={{ fontSize: 26, fontWeight: 500 }}
+                              >
+                                No file has been uploaded yet
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              <a
+                                href={data.message.teacherMaterials}
+                                target="_blank"
+                                rel="noopener noreferrer nofollow noindex"
+                                className="m-auto text-center"
+                                style={{ fontSize: 26, fontWeight: 500 }}
+                              >
+                                Click Here
+                              </a>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
             </>
           ) : (
             <>

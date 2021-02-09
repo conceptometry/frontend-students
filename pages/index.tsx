@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import HomeButtons from "../src/components/Home/Buttons";
 import HomeInfoTabs from "../src/components/Home/InfoTabs";
 import Sidebar from "../src/components/Sidebar";
 
@@ -66,36 +65,11 @@ export const getServerSideProps = async (ctx) => {
       lectureData = await lectureRes.json();
     }
 
-    // Fetch Students
-    const studentRes = await fetch(
-      `${process.env.API_URI}/users/student?page=1&limit=4&sort=-createdAt`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    let studentData;
-    if (!studentRes.ok) {
-      const message = `An error has occured: ${studentRes.status}`;
-      studentData = {
-        success: false,
-        message: message,
-        status: studentRes.status,
-      };
-    } else {
-      studentData = await studentRes.json();
-    }
-
     // Return data as props
     return {
       props: {
         assignmentData,
         lectureData,
-        studentData,
       },
     };
   }
@@ -104,21 +78,12 @@ export const getServerSideProps = async (ctx) => {
 interface Props {
   assignmentData?: any;
   lectureData?: any;
-  studentData?: any;
 }
 
-export default function Home({
-  assignmentData,
-  lectureData,
-  studentData,
-}: Props) {
+export default function Home({ assignmentData, lectureData }: Props) {
   const router = useRouter();
   useEffect(() => {
-    if (
-      assignmentData === false ||
-      lectureData === false ||
-      assignmentData === false
-    ) {
+    if (assignmentData === false || lectureData === false) {
       router.push("/login");
     }
   }, []);
@@ -129,16 +94,12 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Sidebar>
-        {assignmentData.success === true ||
-        lectureData.success === true ||
-        studentData.success === true ? (
+        {assignmentData.success === true || lectureData.success === true ? (
           <>
             <HomeInfoTabs
               lectureData={lectureData}
               assignmentData={assignmentData}
-              studentData={studentData}
             />
-            <HomeButtons />
           </>
         ) : (
           <>

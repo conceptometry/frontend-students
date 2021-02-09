@@ -71,16 +71,6 @@ const Lectures = ({ data }) => {
       <Sidebar>
         {data.success === true ? (
           <>
-            <Link href="/lectures/add">
-              <div
-                className="addLecture position-fixed"
-                style={{ top: 68, right: 10 }}
-              >
-                <IconButton className="outline-none">
-                  <AddRounded className="outline-none" />
-                </IconButton>
-              </div>
-            </Link>
             <h2 className="text-center my-2">Lectures</h2>
 
             <DayTabs data={data} />

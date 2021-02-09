@@ -73,26 +73,42 @@ const ViewSubmissionsByAssignment = ({ data, assignmentData }) => {
         <title>Conceptometry | Assignment Submissions</title>
       </Head>
       <Sidebar>
-        <h2 className="mx-4 mt-3">{assignmentData.message.name}</h2>
-        <p className="mx-4" style={{ marginTop: "-12px" }}>
-          Submissions
-        </p>
-        {data.count === 0 ? (
+        {data &&
+        data.success === false &&
+        assignmentData &&
+        assignmentData.success === true ? (
           <>
-            <p className="mx-4">Nobody has submitted the assignment...</p>
+            {" "}
+            <h2 className="mx-4 mt-3">{assignmentData.message.name}</h2>
+            <p className="mx-4" style={{ marginTop: "-12px" }}>
+              Submissions
+            </p>
+            {data.count === 0 ? (
+              <>
+                <p className="mx-4">Nobody has submitted the assignment...</p>
+              </>
+            ) : (
+              <>
+                <List dense={false} className="d-flex flex-column mx-4">
+                  {data && data.message && (
+                    <>
+                      {data.message.map((d) => (
+                        <SubmissionList
+                          key={d._id}
+                          id={d._id}
+                          name={d.user.name}
+                          style={false}
+                        />
+                      ))}
+                    </>
+                  )}
+                </List>
+              </>
+            )}
           </>
         ) : (
           <>
-            <List dense={false} className="d-flex flex-column mx-4">
-              {data.message.map((d) => (
-                <SubmissionList
-                  key={d._id}
-                  id={d._id}
-                  name={d.user.name}
-                  style={false}
-                />
-              ))}
-            </List>
+            <p className="m-3">{`${data.message}, ${assignmentData.message}`}</p>
           </>
         )}
       </Sidebar>

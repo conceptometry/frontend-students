@@ -31,7 +31,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export default function ResponsiveDrawer(props: Props) {
+export default function Sidebar(props: Props) {
   const { window } = props;
   const classes = useDrawerStyles();
   const theme = useTheme();

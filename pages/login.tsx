@@ -58,7 +58,6 @@ const Login = () => {
     };
     try {
       const res = await fetch(url, options);
-
       const resJson = await res.json();
       if (resJson.success === true) {
         console.log(resJson);
@@ -87,6 +86,19 @@ const Login = () => {
       setSubmitting(false);
     }
   };
+
+  const [alertClose, setAlertClose] = useState(true);
+
+  useEffect(() => {
+    let userAgentString = navigator.userAgent;
+    let chrome = userAgentString.indexOf("Chrome") > -1;
+    if (!chrome) {
+      setAlertClose(false);
+    } else {
+      setAlertClose(true);
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -159,6 +171,27 @@ const Login = () => {
             </>
           )}
         </form>
+
+        <>
+          <div
+            className={`alert alert-warning alert-dismissible fade text-center mt-3 ${
+              !alertClose && `show`
+            }`}
+            role="alert"
+          >
+            Hi, we have noticed that your are using a browser other than{" "}
+            <strong>Google Chrome.</strong> We recommend that you use Chrome for
+            a better experience.
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+              onClick={() => setAlertClose(true)}
+            ></button>
+          </div>
+        </>
+
         {response ? (
           <>
             <p className="text-center mt-1">{response}</p>

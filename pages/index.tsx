@@ -15,7 +15,7 @@ export const getServerSideProps = async (ctx) => {
       props: { assignmentData: false, lectureData: false, studentData: false },
     };
   } else {
-    const token = ctx.req.headers.cookie.split("=")[1];
+    const token = ctx.req.headers.cookie.split("token=")[1];
     // Fetch Assignments
     const assignmentRes = await fetch(
       `${process.env.API_URI}/assignments?page=1&limit=4`,

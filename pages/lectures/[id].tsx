@@ -14,7 +14,7 @@ export const getServerSideProps = async (ctx) => {
   ) {
     return { props: { data: false } };
   } else {
-    const token = ctx.req.headers.cookie.split("=")[1];
+    const token = ctx.req.headers.cookie.split("token=")[1];
     const id = ctx.query.id;
     const url = `${process.env.API_URI}/lectures/${id}`;
     const options = {

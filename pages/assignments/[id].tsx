@@ -16,7 +16,7 @@ export const getServerSideProps = async (ctx) => {
   ) {
     return { props: { data: false } };
   } else {
-    const token = ctx.req.headers.cookie.split("=")[1];
+    const token = ctx.req.headers.cookie.split("token=")[1];
     const id = ctx.query.id;
     const options = {
       method: "GET",
@@ -104,6 +104,16 @@ const SingleAssignment = ({ data }) => {
       (createdAt.getMonth() + 1) +
       "/" +
       createdAt.getFullYear();
+  }
+  let formattedSubmssionDate;
+  if (resLoaded && response.length > 0) {
+    const submissionDate = new Date(response[0].submissionDate);
+    formattedSubmssionDate =
+      submissionDate.getDate() +
+      "/" +
+      (submissionDate.getMonth() + 1) +
+      "/" +
+      submissionDate.getFullYear();
   }
   return (
     <>
@@ -238,46 +248,65 @@ const SingleAssignment = ({ data }) => {
                         </div>
                       </div>
                       <hr />
-                      <div className="container">
+                      <div className="mx-2">
                         <h4>Submission Text</h4>
                         <p>{response[0].submissionText}</p>
                       </div>
-                      <div className="d-flex flex-lg-row flex-column mw-100">
-                        <InfoBlock
-                          name={"Submission Date"}
-                          info={response[0].remarks}
-                        />
-                        <div
-                          className="w-100 border border-primary border-2 bg-infoblock p-3 mx-md-2 d-flex flex-column mt-lg-0 mt-3"
-                          style={{ borderRadius: 12, minHeight: 190 }}
-                        >
-                          <p className="mx-auto mt-3" style={{ fontSize: 18 }}>
-                            {"Reference Materials"}
-                          </p>
+                      <div className="mx-3 mx-md-3 mw-100 mb-3">
+                        <div className="d-flex flex-lg-row flex-column mw-100">
+                          <InfoBlock
+                            name={"Submission Date"}
+                            info={formattedSubmssionDate}
+                          />
+                          <div
+                            className="w-100 border border-primary border-2 bg-infoblock p-3 mx-md-2 d-flex flex-column mt-lg-0 mt-3"
+                            style={{ borderRadius: 12, minHeight: 190 }}
+                          >
+                            <p
+                              className="mx-auto mt-3"
+                              style={{ fontSize: 18 }}
+                            >
+                              {"Reference Materials"}
+                            </p>
 
-                          {data.message.teacherMaterials ===
-                          "No file has been uploaded" ? (
+                            {response[0].submissionMaterials ===
+                            "No file has been uploaded" ? (
+                              <>
+                                <p
+                                  className="m-auto text-center"
+                                  style={{ fontSize: 26, fontWeight: 500 }}
+                                >
+                                  No file has been uploaded yet
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <a
+                                  href={response[0].submissionMaterials}
+                                  target="_blank"
+                                  rel="noopener noreferrer nofollow noindex"
+                                  className="m-auto text-center"
+                                  style={{ fontSize: 26, fontWeight: 500 }}
+                                >
+                                  Click Here
+                                </a>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                        <div className="d-flex flex-lg-row flex-column mw-100 mt-3">
+                          {response[0].marks && (
                             <>
-                              <p
-                                className="m-auto text-center"
-                                style={{ fontSize: 26, fontWeight: 500 }}
-                              >
-                                No file has been uploaded yet
-                              </p>
-                            </>
-                          ) : (
-                            <>
-                              <a
-                                href={data.message.teacherMaterials}
-                                target="_blank"
-                                rel="noopener noreferrer nofollow noindex"
-                                className="m-auto text-center"
-                                style={{ fontSize: 26, fontWeight: 500 }}
-                              >
-                                Click Here
-                              </a>
+                              <InfoBlock
+                                name={`Marks`}
+                                info={response[0].marks}
+                              />
                             </>
                           )}
+                          <InfoBlock
+                            name={"Submission Remarks"}
+                            info={response[0].remarks}
+                          />
                         </div>
                       </div>
                     </>

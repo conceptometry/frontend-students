@@ -18,7 +18,7 @@ export const getServerSideProps = async (ctx) => {
   ) {
     return { props: { data: false } };
   } else {
-    const token = ctx.req.headers.cookie.split("=")[1];
+    const token = ctx.req.headers.cookie.split("token=")[1];
     const url = `${process.env.API_URI}/lectures?page=${page || 1}&limit=30`;
     const options = {
       method: "GET",

@@ -8,11 +8,11 @@ import { useCookies } from 'react-cookie';
 const Login = () => {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(['token']);
-  // useEffect(() => {
-  //   if (cookies.token && cookies.token !== null) {
-  //     router.push("/");
-  //   }
-  // }, [cookies.token]);
+  useEffect(() => {
+    if (cookies.token) {
+      router.push('/');
+    }
+  }, [cookies.token]);
 
   const [{ token }, dispatch]: any = useStateValue();
   const [email, setEmail] = useState('');

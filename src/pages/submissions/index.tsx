@@ -98,13 +98,13 @@ const SingleSubmission = ({ data }) => {
   }, [data]);
 
   const { id } = router.query;
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState<boolean>(false);
   const { handleSubmit, errors, register } = useForm();
   const [cookies] = useCookies(['token']);
-  const markAssignment = async (data) => {
+  const markAssignment = async (data: any) => {
     setSubmitting(true);
     console.log(JSON.stringify(data));
-    const url = `${process.env.NEXT_PUBLIC_API_URI}/submissions/${id}/mark`;
+    const url: string = `${process.env.NEXT_PUBLIC_API_URI}/submissions/${id}/mark`;
     const options = {
       method: 'PUT',
       headers: {
@@ -122,20 +122,20 @@ const SingleSubmission = ({ data }) => {
         setSubmitting(false);
         console.log(res);
       } else {
-        const resJson = await res.json();
+        const resJson: any = await res.json();
         console.log(resJson);
         if (resJson.success === true) {
           setResponse(resJson.message);
           setSubmitting(false);
         } else {
-          const message = `An error has occured: 40X`;
+          const message: string = `An error has occured: 40X`;
           setResponse(message);
           setSubmitting(false);
         }
       }
     } catch (e) {
       console.log(e);
-      const message = `An error has occured: 50X`;
+      const message: string = `An error has occured: 50X`;
       setResponse(message);
       setSubmitting(false);
     }

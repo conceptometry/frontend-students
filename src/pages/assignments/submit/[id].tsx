@@ -3,10 +3,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import Sidebar from '../../../src/components/Sidebar';
+import Sidebar from '../../../components/Sidebar';
+import { parseCookies } from '../../../helpers/parseCookies';
 
 export const getServerSideProps = async (ctx) => {
-  const isLoggedIn = ctx.req.headers.cookie;
+  const isLoggedIn: any = parseCookies(ctx.req).token;
   if (
     isLoggedIn === 'token=null' ||
     isLoggedIn === 'token=undefined' ||
@@ -16,7 +17,7 @@ export const getServerSideProps = async (ctx) => {
       props: { data: false },
     };
   } else {
-    const token = ctx.req.headers.cookie.split('token=')[1];
+    const token = parseCookies(ctx.req).token;
     const { id } = ctx.query;
     // Fetch Assignments
     const res = await fetch(`${process.env.API_URI}/assignments/${id}`, {

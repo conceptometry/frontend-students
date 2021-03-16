@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useStateValue } from '../context/StateProvider';
 
 import { useCookies } from 'react-cookie';
-import { setTimeout } from 'timers';
 
-const ResetPassword = () => {
+const ForgotPassword = () => {
   const router = useRouter();
   const [cookies, setCookie] = useCookies(['token']);
   useEffect(() => {
@@ -14,11 +14,10 @@ const ResetPassword = () => {
     }
   }, [cookies.token]);
 
-  const { token } = router.query;
-
-  const [password, setPassword] = useState('');
+  const [{ token }, dispatch]: any = useStateValue();
+  const [email, setEmail] = useState('');
   const formData = {
-    password: password,
+    email,
   };
 
   useEffect(() => {
@@ -47,10 +46,9 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    const url = `${process.env.NEXT_PUBLIC_API_URI}/auth/resetpassword/${token}`;
-    console.log(url);
+    const url = `${process.env.NEXT_PUBLIC_API_URI}/auth/forgotpassword`;
     const options = {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -63,17 +61,11 @@ const ResetPassword = () => {
         console.log(resJson);
         setResponse(
           `${
-            resJson.message === true
-              ? `Your password has successfully been reset`
+            resJson.message === 'Email sent'
+              ? 'An email has been sent to you with a link to reset your password'
               : resJson.message
           }`
         );
-
-        setCookie('token', `${resJson.token}`, {
-          path: '/',
-        });
-        localStorage.setItem('user', JSON.stringify(resJson.user));
-
         setSubmitting(false);
       } else {
         console.log(resJson.message);
@@ -92,7 +84,7 @@ const ResetPassword = () => {
   return (
     <>
       <Head>
-        <title>Conceptometry | Reset Password</title>
+        <title>Conceptometry | Forgot Password</title>
       </Head>
       <div className='container'>
         <img
@@ -103,7 +95,7 @@ const ResetPassword = () => {
             maxWidth: 300,
           }}
         />
-        <h2 className='text-center'>Reset Password</h2>
+        <h2 className='text-center'>Forgot Password</h2>
         <form
           className='mt-4 needs-validation'
           noValidate={true}
@@ -111,19 +103,16 @@ const ResetPassword = () => {
         >
           <div className='my-3 form-floating'>
             <input
-              type='password'
-              name='passsword'
-              placeholder='Password'
+              type='email'
+              name='email'
+              placeholder='Email'
               className='form-control w-100'
-              value={password}
-              minLength={6}
-              onChange={(e) => setPassword(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <label htmlFor='nameField'>Password</label>
-            <div className='invalid-feedback'>
-              Please provide a valid password (minimum length 6)
-            </div>
+            <label htmlFor='nameField'>Email</label>
+            <div className='invalid-feedback'>Please provide a valid email</div>
           </div>
           {submitting === true ? (
             <>
@@ -163,4 +152,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ForgotPassword;

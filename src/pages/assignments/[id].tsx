@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Sidebar from '../../src/components/Sidebar';
+import Sidebar from '../../components/Sidebar';
 import Head from 'next/head';
-import InfoBlock from '../../src/components/blocks/InfoBlock';
+import InfoBlock from '../../components/blocks/InfoBlock';
 import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { parseCookies } from '../../helpers/parseCookies';
 
 export const getServerSideProps = async (ctx) => {
-  const isLoggedIn = ctx.req.headers.cookie;
+  const isLoggedIn: any = parseCookies(ctx.req).token;
   if (
     isLoggedIn === 'token=null' ||
     isLoggedIn === 'token=undefined' ||
@@ -16,7 +17,7 @@ export const getServerSideProps = async (ctx) => {
   ) {
     return { props: { data: false } };
   } else {
-    const token = ctx.req.headers.cookie.split('token=')[1];
+    const token = parseCookies(ctx.req).token;
     const id = ctx.query.id;
     const options = {
       method: 'GET',

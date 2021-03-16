@@ -1,12 +1,12 @@
-import '../styles/globals.css';
+import '../../styles/globals.css';
 import Router from 'next/router';
 import NProgress from 'nprogress'; //nprogress module
-import '../styles/nprogress.css'; //styles of nprogress
+import '../../styles/nprogress.css'; //styles of nprogress
 import 'bootstrap/dist/css/bootstrap.css';
 import Error from 'next/error';
 import { useEffect } from 'react';
-import { StateProvider } from '../src/context/StateProvider';
-import reducer, { initialState } from '../src/context/reducer';
+import { StateProvider } from '../context/StateProvider';
+import reducer, { initialState } from '../context/reducer';
 import { useCookies, CookiesProvider } from 'react-cookie';
 
 //Binding events.
@@ -14,7 +14,7 @@ NProgress.configure({
   showSpinner: false,
   speed: 150,
   trickleRate: 0.02,
-  trickleSpeed: 50,
+  trickleSpeed: 100,
   easing: 'ease',
 });
 Router.events.on('routeChangeStart', () => NProgress.start());

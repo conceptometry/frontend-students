@@ -9,17 +9,16 @@ import { useCookies } from 'react-cookie';
 import { parseCookies } from '../../helpers/parseCookies';
 
 export const getServerSideProps = async (ctx) => {
-  const isLoggedIn: any = parseCookies(ctx.req).token;
-  if (
-    isLoggedIn === 'token=null' ||
-    isLoggedIn === 'token=undefined' ||
-    !isLoggedIn
-  ) {
+  const isLoggedIn: string | undefined | null = parseCookies(ctx.req).token;
+  if (isLoggedIn === null || isLoggedIn === undefined || !isLoggedIn) {
     return { props: { data: false } };
   } else {
     const token = parseCookies(ctx.req).token;
     const id = ctx.query.id;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +62,10 @@ const SingleAssignment = ({ data }) => {
     e.preventDefault();
     setSubmitting(true);
     const url = `${process.env.NEXT_PUBLIC_API_URI}/submissions/get/${router.query.id}/my`;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -76,14 +78,11 @@ const SingleAssignment = ({ data }) => {
       if (resJson.success === true) {
         setResponse(resJson.message);
         setSubmitting(false);
-        console.log(response);
         setResLoaded(true);
       } else {
-        console.log(resJson.message);
         setSubmitting(false);
       }
     } catch (e) {
-      console.log(e);
       setSubmitting(false);
     }
   };

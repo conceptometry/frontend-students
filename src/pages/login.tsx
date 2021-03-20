@@ -50,7 +50,10 @@ const Login = () => {
     e.preventDefault();
     setSubmitting(true);
     const url = `${process.env.NEXT_PUBLIC_API_URI}/auth/login`;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -60,8 +63,7 @@ const Login = () => {
     try {
       const res = await fetch(url, options);
       const resJson = await res.json();
-      if (resJson.success === true) {
-        console.log(resJson);
+      if (resJson.success === true && resJson.user.role === 'student') {
         dispatch({
           type: 'SET_USER',
           user: resJson.user,
@@ -77,14 +79,20 @@ const Login = () => {
         });
         localStorage.setItem('user', JSON.stringify(resJson.user));
         router.push('/');
+      } else if (resJson.success === false) {
+        const message = `${resJson.message}`;
+        setResponse(message);
+        setSubmitting(false);
+      } else if (resJson.user.role !== 'student') {
+        const message = `Only students can access the dashboard`;
+        setResponse(message);
+        setSubmitting(false);
       } else {
-        console.log(resJson.message);
         const message = `${resJson.message}`;
         setResponse(message);
         setSubmitting(false);
       }
     } catch (e) {
-      console.log(e);
       const message = `An error has occured: 50X`;
       setResponse(message);
       setSubmitting(false);

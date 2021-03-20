@@ -32,7 +32,10 @@ function MyApp({ Component, pageProps, router }: Props) {
   useEffect(() => {
     const get = async () => {
       const url = `${process.env.NEXT_PUBLIC_API_URI}/users/me`;
-      const options = {
+      const options: {
+        method: string;
+        headers: { 'Content-Type': string; authorization: string };
+      } = {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -46,11 +49,9 @@ function MyApp({ Component, pageProps, router }: Props) {
         if (resJson.success === true) {
           localStorage.setItem('user', JSON.stringify(resJson.message));
         } else {
-          console.log(resJson.message);
           return <Error statusCode={res.status} title={resJson.message} />;
         }
       } catch (e) {
-        console.log(e);
         return <Error statusCode={500} title={'Internal server error'} />;
       }
     };

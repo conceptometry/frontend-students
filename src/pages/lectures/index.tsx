@@ -11,17 +11,16 @@ import { parseCookies } from '../../helpers/parseCookies';
 
 export const getServerSideProps = async (ctx) => {
   const page = ctx.query.page;
-  const isLoggedIn: any = parseCookies(ctx.req).token;
-  if (
-    isLoggedIn === 'token=null' ||
-    isLoggedIn === 'token=undefined' ||
-    !isLoggedIn
-  ) {
+  const isLoggedIn: string | undefined | null = parseCookies(ctx.req).token;
+  if (isLoggedIn === null || isLoggedIn === undefined || !isLoggedIn) {
     return { props: { data: false } };
   } else {
     const token = parseCookies(ctx.req).token;
     const url = `${process.env.API_URI}/lectures?page=${page || 1}&limit=30`;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

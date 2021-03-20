@@ -6,13 +6,8 @@ import Sidebar from '../components/Sidebar';
 import { parseCookies } from '../helpers/parseCookies';
 
 export const getServerSideProps = async (ctx) => {
-  const isLoggedIn: any = parseCookies(ctx.req).token;
-  console.log(isLoggedIn);
-  if (
-    isLoggedIn === 'token=null' ||
-    isLoggedIn === 'token=undefined' ||
-    !isLoggedIn
-  ) {
+  const isLoggedIn: string | undefined | null = parseCookies(ctx.req).token;
+  if (isLoggedIn === null || isLoggedIn === undefined || !isLoggedIn) {
     return {
       props: { assignmentData: false, lectureData: false, studentData: false },
     };

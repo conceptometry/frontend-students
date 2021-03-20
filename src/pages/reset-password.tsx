@@ -47,8 +47,10 @@ const ResetPassword = () => {
     e.preventDefault();
     setSubmitting(true);
     const url = `${process.env.NEXT_PUBLIC_API_URI}/auth/resetpassword/${token}`;
-    console.log(url);
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -58,8 +60,7 @@ const ResetPassword = () => {
     try {
       const res = await fetch(url, options);
       const resJson = await res.json();
-      if (resJson.success === true) {
-        console.log(resJson);
+      if (resJson.success === true && resJson.user.role === 'student') {
         setResponse(
           `${
             resJson.message === true
@@ -77,14 +78,20 @@ const ResetPassword = () => {
         localStorage.setItem('user', JSON.stringify(resJson.user));
 
         setSubmitting(false);
+      } else if (resJson.success === false) {
+        const message = `${resJson.message}`;
+        setResponse(message);
+        setSubmitting(false);
+      } else if (resJson.user.role !== 'student') {
+        const message = `Only students can access the dashboard`;
+        setResponse(message);
+        setSubmitting(false);
       } else {
-        console.log(resJson.message);
         const message = `${resJson.message}`;
         setResponse(message);
         setSubmitting(false);
       }
     } catch (e) {
-      console.log(e);
       const message = `An error has occured: 50X`;
       setResponse(message);
       setSubmitting(false);

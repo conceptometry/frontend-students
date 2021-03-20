@@ -7,12 +7,8 @@ import Sidebar from '../../../components/Sidebar';
 import { parseCookies } from '../../../helpers/parseCookies';
 
 export const getServerSideProps = async (ctx) => {
-  const isLoggedIn: any = parseCookies(ctx.req).token;
-  if (
-    isLoggedIn === 'token=null' ||
-    isLoggedIn === 'token=undefined' ||
-    !isLoggedIn
-  ) {
+  const isLoggedIn: string | undefined | null = parseCookies(ctx.req).token;
+  if (isLoggedIn === null || isLoggedIn === undefined || !isLoggedIn) {
     return {
       props: { data: false },
     };
@@ -81,7 +77,6 @@ const submitAssignment = ({ data }: Props) => {
   }, []);
 
   const id = router.query.id;
-  console.log(data);
 
   const [assignmentFile, setFile] = useState(null);
 
@@ -106,7 +101,10 @@ const submitAssignment = ({ data }: Props) => {
     setSubmitting(true);
     const url = `${process.env.NEXT_PUBLIC_API_URI}/submissions/submit/${id}`;
 
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'POST',
       headers: {
         authorization: `Bearer ${cookies.token}`,
@@ -121,13 +119,11 @@ const submitAssignment = ({ data }: Props) => {
         setResponse(resJson.message);
         setSubmitting(false);
       } else {
-        console.log(resJson.message);
         const message = `${resJson.message}`;
         setResponse(message);
         setSubmitting(false);
       }
     } catch (e) {
-      console.log(e);
       const message = `An error has occured: 50X`;
       setResponse(message);
       setSubmitting(false);

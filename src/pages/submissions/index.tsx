@@ -33,18 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const getServerSideProps = async (ctx) => {
-  const isLoggedIn: any = parseCookies(ctx.req).token;
-  if (
-    isLoggedIn === 'token=null' ||
-    isLoggedIn === 'token=undefined' ||
-    !isLoggedIn
-  ) {
+  const isLoggedIn: string | undefined | null = parseCookies(ctx.req).token;
+  if (isLoggedIn === null || isLoggedIn === undefined || !isLoggedIn) {
     return { props: { data: false } };
   } else {
     const token = parseCookies(ctx.req).token;
     const id = ctx.query.id;
     const url = `${process.env.API_URI}/submissions/${id}`;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -103,9 +102,11 @@ const SingleSubmission = ({ data }) => {
   const [cookies] = useCookies(['token']);
   const markAssignment = async (data: any) => {
     setSubmitting(true);
-    console.log(JSON.stringify(data));
     const url: string = `${process.env.NEXT_PUBLIC_API_URI}/submissions/${id}/mark`;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -120,10 +121,8 @@ const SingleSubmission = ({ data }) => {
         const message = `An error has occured: ${res.status}`;
         setResponse(message);
         setSubmitting(false);
-        console.log(res);
       } else {
         const resJson: any = await res.json();
-        console.log(resJson);
         if (resJson.success === true) {
           setResponse(resJson.message);
           setSubmitting(false);
@@ -134,7 +133,6 @@ const SingleSubmission = ({ data }) => {
         }
       }
     } catch (e) {
-      console.log(e);
       const message: string = `An error has occured: 50X`;
       setResponse(message);
       setSubmitting(false);

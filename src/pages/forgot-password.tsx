@@ -47,7 +47,10 @@ const ForgotPassword = () => {
     e.preventDefault();
     setSubmitting(true);
     const url = `${process.env.NEXT_PUBLIC_API_URI}/auth/forgotpassword`;
-    const options = {
+    const options: {
+      method: string;
+      headers: { 'Content-Type': string; authorization: string };
+    } = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +61,6 @@ const ForgotPassword = () => {
       const res = await fetch(url, options);
       const resJson = await res.json();
       if (resJson.success === true) {
-        console.log(resJson);
         setResponse(
           `${
             resJson.message === 'Email sent'
@@ -68,13 +70,11 @@ const ForgotPassword = () => {
         );
         setSubmitting(false);
       } else {
-        console.log(resJson.message);
         const message = `${resJson.message}`;
         setResponse(message);
         setSubmitting(false);
       }
     } catch (e) {
-      console.log(e);
       const message = `An error has occured: 50X`;
       setResponse(message);
       setSubmitting(false);
